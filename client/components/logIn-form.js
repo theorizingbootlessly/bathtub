@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
+import LandingPage from './LandingPage';
 
 export default class LogIn extends Component {
   constructor(){
     super()
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      redirect: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,23 +25,32 @@ export default class LogIn extends Component {
     event.preventDefault()
     try{
       //Axios request
-      await axios.post('/api/auth', {
+      const checkLogIn = await axios.post('/auth/login', {
         email: this.state.email,
         password: this.state.password
       })
+      if (checkLogIn){
+        this.setState({
+          redirect: true
+        })
+      } 
     }catch(err){
       console.log(err)
     }
   }
 
   render(){
+    if (this.state.redirect){
+      return <LandingPage />
+    }
+  
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="email" onChange={this.handle} value={this.state.email}></input>
+          <input type="text" name="email" onChange={this.handleChange} value={this.state.email}></input>
           <label>Email</label>
 
-          <input type="text" name="password" onChange={this.handle} value={this.state.password}></input>
+          <input type="text" name="password" onChange={this.handleChange} value={this.state.password}></input>
           <label>Password</label>
 
           <button type='submit'>Sign In</button>
