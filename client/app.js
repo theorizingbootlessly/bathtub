@@ -1,14 +1,12 @@
 import React from 'react'
-
 import {Navbar} from './components'
-import Routes from './routes'
+import LandingPage from './components/LandingPage'
 
 const App = () => {
   return (
     <div>
-      testing for github/slack link
       <Navbar />
-      <Routes />
+      <LandingPage />
     </div>
   )
 }
