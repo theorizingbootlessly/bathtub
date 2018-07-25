@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-import LandingPage from './LandingPage';
+import App from '../app'
 
 export default class LogIn extends Component {
   constructor(){
@@ -41,7 +41,7 @@ export default class LogIn extends Component {
 
   render(){
     if (this.state.redirect){
-      return <LandingPage />
+      return <App />
     }
   
     return (
