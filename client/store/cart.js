@@ -3,12 +3,13 @@ import history from '../history'
 
 const GET_CART = 'GET_CART';
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
+const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 const defaultCart = [
-  {id: 1, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 3},
-  {id: 2, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 2},
-  {id: 3, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 1}
+  {id: 7, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 9},
+  {id: 8, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 8},
+  {id: 9, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 7}
 ]
 
 // const getCart = (cart) => ({
@@ -16,8 +17,15 @@ const defaultCart = [
 //   cart
 // });
 
+// deletes section
 const deleteItem = id => ({
   type: DELETE_ITEM_FROM_CART,
+  id
+});
+
+// subtracts 1 from quantity in cart for a kind of duck
+const deleteOne = id => ({
+  type: DELETE_ONE_DUCK,
   id
 });
 
@@ -45,6 +53,14 @@ export const deleteItemFromCart = id => dispatch => {
   }
 }
 
+export const deleteOneDuck = id => dispatch => {
+  try {
+    dispatch(deleteOne(id));
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const updateItemInCart = (id, quantity) => dispatch => {
   try {
     dispatch(updateItem(id, quantity))
@@ -59,8 +75,6 @@ const cartReducer = (state = defaultCart, action) => {
       return action.cart;
     case DELETE_ITEM_FROM_CART:
       for (let i = 0; i < state.length; i++) {
-        console.log('state[i].id', state[i].id)
-        console.log('action.id', action.id)
         if (state[i].id === action.id) {
           state.splice(i, 1);
           break;
@@ -71,6 +85,14 @@ const cartReducer = (state = defaultCart, action) => {
       for (let i = 0; i < state.length; i++) {
         if (state.id === action.id) {
           state.quantity = action.quantity;
+          break;
+        }
+      }
+      return state;
+    case DELETE_ONE_DUCK:
+      for (let i = 0; i < state.length; i++) {
+        if (state.id === action.id) {
+          state.quantity = state.quantity - 1;
           break;
         }
       }
