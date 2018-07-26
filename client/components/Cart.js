@@ -27,7 +27,7 @@ class Cart extends Component {
             {item.description}<br />
             {item.price}<br />
             Quantity: {item.quantity}<br />
-            <Link to='/cart' onClick={this.handleDelete(event, item.id)}>[Remove]</Link>
+            <Link to='/cart' onClick={() => this.handleDelete(event, item.id)}>[Remove these kinds of ducks]</Link>
           </li>
         )}
       </div>
