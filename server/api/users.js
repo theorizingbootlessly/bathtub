@@ -15,3 +15,15 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/email/cart', (req, res, next) => { // not :email or ${email} because getting same data for now
+  try {
+    // const user = await User.findById(req.params.email);
+    // const cart = await user.getCart(); // to figure out later -- SESSION
+    res.status(200).send([
+
+    ]/*cart*/);
+  } catch (err) {
+    next(err);
+  }
+});
