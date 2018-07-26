@@ -58,10 +58,7 @@ const cartReducer = (state = defaultCart, action) => {
     case GET_CART:
       return action.cart;
     case DELETE_ITEM_FROM_CART:
-      console.log('action is', action)
       for (let i = 0; i < state.length; i++) {
-        console.log('state[i].id', state[i].id)
-        console.log('action.id', action.id)
         if (state[i].id === action.id) {
           state.splice(i, 1);
           break;
