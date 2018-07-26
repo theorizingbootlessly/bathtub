@@ -16,6 +16,15 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    let newUser = await User.create(req.body)
+    res.json(newUser)
+  } catch (err){
+    console.log(err)
+  }
+})
+
 router.get('/email/cart', (req, res, next) => { // not :email or ${email} because getting same data for now
   try {
     // const user = await User.findById(req.params.email);
