@@ -91,8 +91,8 @@ const cartReducer = (state = defaultCart, action) => {
       return state;
     case DELETE_ONE_DUCK:
       for (let i = 0; i < state.length; i++) {
-        if (state.id === action.id) {
-          state.quantity = state.quantity - 1;
+        if (state[i].id === action.id) {
+          state[i].quantity = state[i].quantity - 1;
           break;
         }
       }
