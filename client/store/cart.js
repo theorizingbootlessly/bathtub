@@ -3,6 +3,7 @@ import history from '../history'
 
 const GET_CART = 'GET_CART';
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
+const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 const defaultCart = [
@@ -16,8 +17,15 @@ const defaultCart = [
 //   cart
 // });
 
+// deletes section
 const deleteItem = id => ({
   type: DELETE_ITEM_FROM_CART,
+  id
+});
+
+// subtracts 1 from quantity in cart for a kind of duck
+const deleteOne = id => ({
+  type: DELETE_ONE_DUCK,
   id
 });
 
@@ -45,6 +53,14 @@ export const deleteItemFromCart = id => dispatch => {
   }
 }
 
+export const deleteOneDuck = id => dispatch => {
+  try {
+    dispatch(deleteOne(id));
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const updateItemInCart = (id, quantity) => dispatch => {
   try {
     dispatch(updateItem(id, quantity))
@@ -69,6 +85,14 @@ const cartReducer = (state = defaultCart, action) => {
       for (let i = 0; i < state.length; i++) {
         if (state.id === action.id) {
           state.quantity = action.quantity;
+          break;
+        }
+      }
+      return state;
+    case DELETE_ONE_DUCK:
+      for (let i = 0; i < state.length; i++) {
+        if (state.id === action.id) {
+          state.quantity = state.quantity - 1;
           break;
         }
       }
