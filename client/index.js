@@ -7,7 +7,7 @@ import store from './store'
 import App from './app'
 import LogIn from './components/logIn-form'
 import Cart from './components/Cart'
-import List from './components/List'
+import DuckList from './components/DuckList'
 // establishes socket connection
 import './socket'
 
@@ -17,7 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/cart" component={Cart} />
-        <Route exact path="/products" component={List} />
+        <Route exact path="/products" component={DuckList} />
         <App />
       </Switch>
     </Router>
