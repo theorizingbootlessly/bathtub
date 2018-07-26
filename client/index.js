@@ -9,6 +9,7 @@ import App from './app'
 import LogIn from './components/logIn-form'
 import Signup from './components/Signup'
 import Cart from './components/Cart'
+import DuckList from './components/DuckList'
 import Checkout from './components/Checkout'
 
 // establishes socket connection
@@ -18,11 +19,13 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-      <Route exact path='/login' component={LogIn} />
-      <Route exact path='/cart' component={Cart} />
-      <Route exact path='/checkout' component={Checkout} />
-      <Route exact path ='/signup' component={Signup} />
-      <App />
+        <Route exact path="/login" component={LogIn} />
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/products" component={DuckList} />
+
+        <App />
       </Switch>
     </Router>
   </Provider>,
