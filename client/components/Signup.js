@@ -114,7 +114,6 @@ import {users, add_user} from '../store'
 }
 
 const mapStateToProps = (state) => {
-  console.log('state.users: ', state.user.users)
   return {
     users: state.user.users,
   }

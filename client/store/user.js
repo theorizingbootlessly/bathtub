@@ -97,7 +97,6 @@ export default function(state = initialState, action) {
     case GET_USERS:
       return {...state, users: action.users}
     case ADD_USER:
-      console.log('action.user:', action.user)
       return {...state, users: [...state.users, action.user]}
     default:
       return state
