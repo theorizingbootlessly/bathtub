@@ -6,9 +6,9 @@ const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 const defaultCart = [
-  {id: 1, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 3},
-  {id: 2, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 2},
-  {id: 3, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 1}
+  {id: 7, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 9},
+  {id: 8, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 8},
+  {id: 9, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 7}
 ]
 
 // const getCart = (cart) => ({
@@ -58,6 +58,7 @@ const cartReducer = (state = defaultCart, action) => {
     case GET_CART:
       return action.cart;
     case DELETE_ITEM_FROM_CART:
+      console.log('action is', action)
       for (let i = 0; i < state.length; i++) {
         console.log('state[i].id', state[i].id)
         console.log('action.id', action.id)

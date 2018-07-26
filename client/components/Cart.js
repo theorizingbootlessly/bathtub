@@ -11,30 +11,30 @@ class Cart extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleDelete(id) {
+  handleDelete(event, id) {
     event.preventDefault();
     this.props.deleteItem(id);
   }
 
   render() {
+    const renderCart = (!this.props.cart.length) ? ('There are no items in your cart!') : (
+        <div>
+          {this.props.cart.map(item =>
+            <li key={item.id}>
+              <img src={item.imgUrl} /><br />
+              {item.name}<br />
+              {item.color}<br />
+              {item.description}<br />
+              {item.price}<br />
+              Quantity: {item.quantity}<br />
+              <Link to='/cart' onClick={this.handleDelete(event, item.id)}>[Remove]</Link>
+            </li>
+          )}
+        </div>
+    );
     return (
       <div>
-        <ul>
-          {this.props.cart.map(item => {
-            return (
-              <li key={item.id}>
-                <img src={item.imgUrl} /><br />
-                {item.name}<br />
-                {item.color}<br />
-                {item.description}<br />
-                {item.price}<br />
-                Quantity: {item.quantity}<br />
-                {/* <Link to={`/cart/edit/${item.id}`}>Edit quantity</Link>*/}
-                <button onClick={this.handleDelete(item.id)}>Remove</button><br />
-              </li>
-            );
-          })}
-        </ul>
+        {renderCart}<br />
         <Link to='/checkout'>Checkout</Link>
       </div>
     );
