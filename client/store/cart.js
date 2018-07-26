@@ -1,0 +1,83 @@
+import axios from 'axios'
+import history from '../history'
+
+const GET_CART = 'GET_CART';
+const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
+const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
+
+const defaultCart = [
+  {id: 1, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 3},
+  {id: 2, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 2},
+  {id: 3, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 1}
+]
+
+// const getCart = (cart) => ({
+//   type: GET_CART,
+//   cart
+// });
+
+const deleteItem = id => ({
+  type: DELETE_ITEM_FROM_CART,
+  id
+});
+
+const updateItem = (id, quantity) => ({
+  type: UPDATE_ITEM_IN_CART,
+  id,
+  quantity
+});
+
+// export const fetchCart = () => dispatch => {
+//   try {
+//    // const response = await axios.get(`/api/users/email/cart`); // not :email or ${email} because getting same data for now
+//    // const cart = response.data;
+//     dispatch(getCart());
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+export const deleteItemFromCart = id => dispatch => {
+  try {
+    dispatch(deleteItem(id))
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const updateItemInCart = (id, quantity) => dispatch => {
+  try {
+    dispatch(updateItem(id, quantity))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const cartReducer = (state = defaultCart, action) => {
+  switch (action.type) {
+    case GET_CART:
+      return action.cart;
+    case DELETE_ITEM_FROM_CART:
+      for (let i = 0; i < state.length; i++) {
+        console.log('state[i].id', state[i].id)
+        console.log('action.id', action.id)
+        if (state[i].id === action.id) {
+          state.splice(i, 1);
+          break;
+        }
+      }
+      return state;
+    case UPDATE_ITEM_IN_CART:
+      for (let i = 0; i < state.length; i++) {
+        if (state.id === action.id) {
+          state.quantity = action.quantity;
+          break;
+        }
+      }
+      return state;
+    default:
+      return state;
+  }
+}
+
+export default cartReducer;

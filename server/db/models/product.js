@@ -35,3 +35,5 @@ const Product = db.define('product', {
     defaultValue: 0
   }
 })
+
+module.exports = Product

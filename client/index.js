@@ -6,6 +6,7 @@ import history from './history'
 import store from './store'
 import App from './app'
 import LogIn from './components/logIn-form'
+import Cart from './components/Cart'
 
 // establishes socket connection
 import './socket'
@@ -15,6 +16,7 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
       <Route exact path='/login' component={LogIn} />
+      <Route exact path='/cart' component={Cart} />
       <App />
       </Switch>
     </Router>
