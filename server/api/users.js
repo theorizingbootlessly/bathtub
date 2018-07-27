@@ -19,13 +19,6 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let newUser = await User.create(req.body)
-    // console.log(req.session)
-    console.log('original cart2', req.session.cookie)
-      let cart = (req.session.cookie.cart ? req.session.cooke.cart : [])
-      req.session.cookie.cart = cart
-      // console.log('user', user)
-      // req.session.cart = {testCart: 'cart'}
-      console.log('cookie', req.session.cookie)
     res.json(newUser)
   } catch (err){
     console.log(err)

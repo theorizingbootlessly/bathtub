@@ -30,7 +30,6 @@ const addUser = (user) => ({type: ADD_USER, user})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    console.log('get to website user', res.data)
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)
