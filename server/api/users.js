@@ -33,17 +33,16 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
     if (!user || !product) {
       res.sendStatus(404);
     }
-    if (user === 'guest') {
-      if (!req.session.cart) {
-        req.session.cart = [product];
-      } else {
-        req.session.cart.push(product);
-        res.status(201).send(product);
-      }
-    } else {
-      await user.addToCart(product);
-      res.status(201).send(product);
-    }
+    // if (user === 'guest') {
+      // if (!req.session.cart) {
+      //   req.session.cart = [product];
+      // } else {
+      //   req.session.cart.push(product);
+      //   res.status(201).send(product);
+      // }
+    // } else {
+    await user.addToCart(product);
+    res.status(201).send(product);
   } catch (err) {
     next(err);
   }
