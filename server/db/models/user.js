@@ -44,14 +44,6 @@ User.prototype.addToCart = function(product) {
   this.cart.push(product);
 }
 
-User.prototype.getSubtotal = function() {
-  let subtotal = 0;
-  for (let i = 0; i < this.cart.length; i++) {
-    subtotal += this.cart.price
-  }
-  return subtotal;
-}
-
 /**
  * classMethods
  */

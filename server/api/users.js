@@ -41,7 +41,7 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
 })
 
 // ADD TO CART
-router.post('/:userOrGuest/cart', async (req, res, next) => {
+router.get('/:userOrGuest/cart', async (req, res, next) => {
   try {
     const product = req.body;
     const theUser = req.params.userOrGuest;
