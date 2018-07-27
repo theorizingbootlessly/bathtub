@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { Login } from './auth-form';
+import {set_currentUser} from '../store'
 
-export default class LogIn extends Component {
+class LogIn extends Component {
   constructor() {
     super()
     this.state = {
@@ -29,6 +32,8 @@ export default class LogIn extends Component {
         password: this.state.password
       })
       if (checkLogIn) {
+        this.props.setCurrentUser(checkLogIn.data)
+
         this.setState({
           redirect: true
         })
@@ -66,3 +71,11 @@ export default class LogIn extends Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (currentUser) => dispatch(set_currentUser(currentUser))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(LogIn)
