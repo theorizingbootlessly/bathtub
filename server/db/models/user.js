@@ -27,7 +27,7 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   cart: {
-    type: Sequelize.ARRAY
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
