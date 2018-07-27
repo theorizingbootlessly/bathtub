@@ -25,13 +25,32 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// GET CART ITEMS
+router.post('/:userOrGuest/cart', async (req, res, next) => {
+  try {
+    const theUser = req.params.userOrGuest;
+    const user = await User.findById(theUser);
+    if (user) {
+      res.status(200).send(user.cart);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    next(err);
+  }
+})
+
 // ADD TO CART
 router.post('/:userOrGuest/cart', async (req, res, next) => {
   try {
     const product = req.body;
-    const user = req.params.userOrGuest;
+    const theUser = req.params.userOrGuest;
+    const user = await User.findById(theUser);
     if (!user || !product) {
       res.sendStatus(404);
+    } else {
+      await user.addToCart(product);
+      res.status(201).send(product);
     }
     // if (user === 'guest') {
       // if (!req.session.cart) {
@@ -41,25 +60,7 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       //   res.status(201).send(product);
       // }
     // } else {
-    await user.addToCart(product);
-    res.status(201).send(product);
-  } catch (err) {
-    next(err);
-  }
-});
 
-// GET SUBTOTAL
-router.get('/:userOrGuest/cart/subtotal', async (req, res, next) => {
-  try {
-    const user = req.params.userOrGuest;
-    if (user && user !== 'guest') {
-      const subtotal = await user.getSubtotal();
-      res.status(200).send(subtotal);
-    } else if (user === 'guest') {
-      res.status(200).send('guest-subtotal');
-    } else {
-      res.sendStatus(404);
-    }
   } catch (err) {
     next(err);
   }

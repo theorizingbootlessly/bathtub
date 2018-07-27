@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchCart, fetchSubtotal } from '../store/cart';
+import { fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
 
 class Checkout extends Component {
@@ -18,7 +18,6 @@ class Checkout extends Component {
 
   componentDidMount() {
     this.props.loadCart();
-    this.props.loadSubtotal();
   }
 
   handleChange(event) {
@@ -27,12 +26,15 @@ class Checkout extends Component {
     });
   }
 
-  async handleSubmit(event) {
+  /*async*/ handleSubmit(event) {
     event.preventDefault();
-
   }
 
   render() {
+    let subtotal = 0;
+    this.state.cart.forEach(item => {
+      subtotal += item.price
+    });
     return (
       <div>
         Your cart so far:<br />
@@ -46,6 +48,7 @@ class Checkout extends Component {
             );
           })}
         </ul>
+        Subtotal: ${subtotal || 0.00}
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -80,14 +83,14 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    subtotal: state.subtotal
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCart: () => dispatch(fetchCart()),
-    loadSubtotal: () => dispatch(fetchSubtotal())
+    loadCart: () => dispatch(fetchCart())
   }
 }
 
