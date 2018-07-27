@@ -12,10 +12,10 @@ const defaultCart = [
   {id: 9, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 7}
 ]
 
-// const getCart = (cart) => ({
-//   type: GET_CART,
-//   cart
-// });
+const getCart = cart => ({
+  type: GET_CART,
+  cart
+});
 
 // deletes section
 const deleteItem = id => ({
@@ -35,15 +35,15 @@ const updateItem = (id, quantity) => ({
   quantity
 });
 
-// export const fetchCart = () => dispatch => {
-//   try {
-//    // const response = await axios.get(`/api/users/email/cart`); // not :email or ${email} because getting same data for now
-//    // const cart = response.data;
-//     dispatch(getCart());
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+export const fetchCart = () => async dispatch => {
+  try {
+   const response = await axios.get(`/api/users/:userOrGuest/cart`);
+   const cart = response.data;
+    dispatch(getCart(cart));
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export const deleteItemFromCart = id => dispatch => {
   try {
