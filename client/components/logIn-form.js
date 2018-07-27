@@ -61,6 +61,7 @@ export default class LogIn extends Component {
           <label>Password</label>
           <button type="submit">Sign In</button>
         </form>
+        <a href="/auth/google">login with Google</a>
       </React.Fragment>
     )
   }
