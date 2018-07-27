@@ -37,7 +37,7 @@ const updateItem = (id, quantity) => ({
 
 export const fetchCart = () => async dispatch => {
   try {
-   const response = await axios.get(`/api/users/email/cart`); // not :email or ${email} because getting same data for now
+   const response = await axios.get(`/api/users/:userOrGuest/cart`);
    const cart = response.data;
     dispatch(getCart(cart));
   } catch (err) {
