@@ -1,16 +1,20 @@
 import axios from 'axios'
 import history from '../history'
 
+//Constants for action creators
 const GET_CART = 'GET_CART';
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
+//Dummy data
 const defaultCart = [
   {id: 7, name: 'Great Duck', description: 'Scientifically the greatest duck', price: 3.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 9},
   {id: 8, name: 'WonderDuck', description: 'Heroic duck at a heroic price', price: 4.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 8},
   {id: 9, name: 'Magic Duck', description: 'Magical duck at a magical price', price: 9.99, imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg', quantity: 7}
 ]
+
+//Action creators
 
 // const getCart = (cart) => ({
 //   type: GET_CART,
@@ -34,6 +38,10 @@ const updateItem = (id, quantity) => ({
   id,
   quantity
 });
+
+
+
+//Thunks
 
 // export const fetchCart = () => dispatch => {
 //   try {
@@ -69,6 +77,8 @@ export const updateItemInCart = (id, quantity) => dispatch => {
   }
 }
 
+
+//Reducer
 const cartReducer = (state = defaultCart, action) => {
   switch (action.type) {
     case GET_CART:
