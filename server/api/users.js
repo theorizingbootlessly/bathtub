@@ -47,3 +47,20 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
     next(err);
   }
 });
+
+// GET SUBTOTAL
+router.get('/:userOrGuest/cart/subtotal', async (req, res, next) => {
+  try {
+    const user = req.params.userOrGuest;
+    if (user && user !== 'guest') {
+      const subtotal = await user.getSubtotal();
+      res.status(200).send(subtotal);
+    } else if (user === 'guest') {
+      res.status(200).send('guest-subtotal');
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
