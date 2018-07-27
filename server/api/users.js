@@ -33,7 +33,11 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       res.sendStatus(404);
     }
     if (user === 'guest') {
-
+      if (!res.session.cart) {
+        res.session.cart = [product];
+      } else {
+        res.session.cart.push(product);
+      }
     } else {
       await user.addToCart(product);
       res.status(201).send(product);
