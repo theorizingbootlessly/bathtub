@@ -25,6 +25,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// ADD TO CART
 router.post('/:userOrGuest/cart', async (req, res, next) => {
   try {
     const product = req.body;
@@ -33,10 +34,11 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       res.sendStatus(404);
     }
     if (user === 'guest') {
-      if (!res.session.cart) {
-        res.session.cart = [product];
+      if (!req.session.cart) {
+        req.session.cart = [product];
       } else {
-        res.session.cart.push(product);
+        req.session.cart.push(product);
+        res.status(201).send(product);
       }
     } else {
       await user.addToCart(product);
