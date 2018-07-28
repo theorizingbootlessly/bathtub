@@ -3,17 +3,15 @@ import {Elements, StripeProvider} from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm'
 import { fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
+import {Elements, StripeProvider} from 'react-stripe-elements';
+import CheckoutForm from './CheckoutForm';
 
 class Checkout extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      address: '',
-      creditCard: ''
-    }
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -32,17 +30,18 @@ class Checkout extends Component {
           {this.props.cart.map(item => {
             return (
               <li key={item.id}>
-                {item.name} -
-                {item.price * item.quantity}<br />
+                {item.name}: ${item.price * item.quantity}<br />
               </li>
             );
           })}
         </ul><br />
         Subtotal: ${subtotal || 0.00}
+        <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
           <Elements>
             <CheckoutForm />
           </Elements>
-      </StripeProvider>
+        </StripeProvider>
+      </div>
     );
   }
 }
