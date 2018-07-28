@@ -25,6 +25,7 @@ class LogIn extends Component {
 
   async handleSubmit(event) {
     event.preventDefault()
+
     try {
       //Axios request
       const checkLogIn = await axios.post('/auth/login', {
@@ -39,6 +40,11 @@ class LogIn extends Component {
         })
       }
     } catch (err) {
+
+      alert('Sorry, cannot find user. Please make sure your email and password are typed in correctly')
+      this.setState({
+        password: '',
+      })
       console.log(err)
     }
   }
@@ -58,7 +64,7 @@ class LogIn extends Component {
           />
           <label>Email</label>
           <input
-            type="text"
+            type="password"
             name="password"
             onChange={this.handleChange}
             value={this.state.password}
