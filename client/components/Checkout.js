@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
+import {Elements, StripeProvider} from 'react-stripe-elements';
+import CheckoutForm from './CheckoutForm';
 
 class Checkout extends Component {
 
   constructor() {
     super();
-    this.state = {
-      firstName: '',
-      lastName: '',
-      address: '',
-      creditCard: ''
-    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -33,7 +29,7 @@ class Checkout extends Component {
   render() {
     let subtotal = 0;
     this.props.cart.forEach(item => {
-      subtotal += item.price
+      subtotal += (item.price * item.quantity)
     });
     return (
       <div>
@@ -42,44 +38,17 @@ class Checkout extends Component {
           {this.props.cart.map(item => {
             return (
               <li key={item.id}>
-                {item.name} -
-                {item.price}<br />
+                {item.name}: ${item.price * item.quantity}<br />
               </li>
             );
           })}
         </ul><br />
         Subtotal: ${subtotal || 0.00}
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First name"
-            value={this.state.firstName}
-            onChange={this.handleChange}
-            required /><br />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last name"
-            value={this.state.lastName}
-            onChange={this.handleChange}
-            required /><br />
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={this.state.address}
-            onChange={this.handleChange}
-            required /><br />
-          <input
-            type="number"
-            name="creditCard"
-            placeholder="Credit card number"
-            value={this.state.creditCard}
-            onChange={this.handleChange}
-            required /><br />
-          <button type="submit">Submit</button>
-        </form>
+        <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
+          <Elements>
+            <CheckoutForm />
+          </Elements>
+        </StripeProvider>
       </div>
     );
   }
