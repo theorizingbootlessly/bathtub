@@ -30,7 +30,8 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
     await Cart.findOrCreate({
       where: {
         productId: req.body.id,
-      userId: req.params.userOrGuest
+        quantity: req.body.quantity,
+        userId: req.params.userOrGuest
       }
     });
     res.status(201).send(product);
