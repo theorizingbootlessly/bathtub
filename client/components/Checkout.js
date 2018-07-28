@@ -8,12 +8,6 @@ import CheckoutForm from './CheckoutForm';
 
 class Checkout extends Component {
 
-  constructor() {
-    super();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   componentDidMount() {
     this.props.loadCart();
   }
@@ -36,12 +30,10 @@ class Checkout extends Component {
           })}
         </ul><br />
         Subtotal: ${subtotal || 0.00}
-        <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
           <Elements>
             <CheckoutForm />
           </Elements>
-        </StripeProvider>
-      </div>
+      </StripeProvider>
     );
   }
 }
