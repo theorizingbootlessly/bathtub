@@ -10,7 +10,7 @@ class Checkout extends Component {
       firstName: '',
       lastName: '',
       address: '',
-      creditCard: 0
+      creditCard: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,7 +32,7 @@ class Checkout extends Component {
 
   render() {
     let subtotal = 0;
-    this.state.cart.forEach(item => {
+    this.props.cart.forEach(item => {
       subtotal += item.price
     });
     return (
@@ -53,27 +53,31 @@ class Checkout extends Component {
           <input
             type="text"
             name="firstName"
+            placeholder="First name"
             value={this.state.firstName}
             onChange={this.handleChange}
-            required />
+            required /><br />
           <input
             type="text"
             name="lastName"
+            placeholder="Last name"
             value={this.state.lastName}
             onChange={this.handleChange}
-            required />
+            required /><br />
           <input
             type="text"
             name="address"
+            placeholder="Address"
             value={this.state.address}
             onChange={this.handleChange}
-            required />
+            required /><br />
           <input
             type="number"
             name="creditCard"
+            placeholder="Credit card number"
             value={this.state.creditCard}
             onChange={this.handleChange}
-            required />
+            required /><br />
           <button type="submit">Submit</button>
         </form>
       </div>
