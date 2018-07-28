@@ -22,13 +22,13 @@ const defaultCart = [
 // });
 
 // deletes section
-const deleteItem = id => ({
+export const deleteItem = id => ({
   type: DELETE_ITEM_FROM_CART,
   id
 });
 
 // subtracts 1 from quantity in cart for a kind of duck
-const deleteOne = id => ({
+export const deleteOne = id => ({
   type: DELETE_ONE_DUCK,
   id
 });

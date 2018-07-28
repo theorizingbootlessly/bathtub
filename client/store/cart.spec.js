@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { deleteItem, deleteOne } from '../client/store/cart';
+import { deleteItem, deleteOne } from './cart';
 
 describe('Action-creators', () => {
 
