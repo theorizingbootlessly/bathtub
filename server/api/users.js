@@ -35,29 +35,4 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// ADD TO CART
-router.put('/:userOrGuest/cart', async (req, res, next) => {
-  console.log(req.body)
-  try {
-    const product = {
-      id: req.body.id,
-      quantity: req.body.quantity
-     };
-    const user = req.params.userOrGuest;
-    if (!user || !product) {
-      res.sendStatus(404);
-    }
-    // if (user === 'guest') {
-      // if (!req.session.cart) {
-      //   req.session.cart = [product];
-      // } else {
-      //   req.session.cart.push(product);
-      //   res.status(201).send(product);
-      // }
-    // } else {
-    await user.addToCart(product);
-    res.status(201).send(product);
-  } catch (err) {
-    next(err);
-  }
-});
+

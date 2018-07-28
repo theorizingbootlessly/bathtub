@@ -1,19 +1,18 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
 
-export default class SingleDuck extends Component{
+
+class SingleDuck extends Component{
   constructor(){
     super()
-    this.state = {
-    }
-
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   
   async handleSubmit(event){
     event.preventDefault()
     try{
-      await axios.put(`/api/users/${this.props.user.id}/cart`, {id: this.props.duck.id})
+      await axios.post(`/api/cart/${this.props.currentUser.user.currentUser.id}/cart`, {id: this.props.duck.id})
     }catch(err){
       console.log(err)
     }
@@ -21,7 +20,6 @@ export default class SingleDuck extends Component{
   
   render(){
     const {duck} = this.props
-    console.log(this.props)
     return (
       <div>
         {duck.name}
@@ -38,8 +36,11 @@ export default class SingleDuck extends Component{
 }
 
 
-const mapStateToProps = (state, ownProps) => {
-  
+const mapStateToProps = (state) => {
+  const getUser = state
+  return {
+    currentUser: getUser
+  }
 }
 
-
+export default connect(mapStateToProps)(SingleDuck)
