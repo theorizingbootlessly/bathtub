@@ -26,9 +26,13 @@ router.post('/', async (req, res, next) => {
 })
 
 // ADD TO CART
-router.post('/:userOrGuest/cart', async (req, res, next) => {
+router.put('/:userOrGuest/cart', async (req, res, next) => {
+  console.log(req.body)
   try {
-    const product = req.body;
+    const product = {
+      id: req.body.id,
+      quantity: req.body.quantity
+     };
     const user = req.params.userOrGuest;
     if (!user || !product) {
       res.sendStatus(404);

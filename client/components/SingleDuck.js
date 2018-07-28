@@ -1,37 +1,27 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-// const SingleDuck = ({duck}) => {
-//   return (
-//     <div>
-//       {duck.name}
-//       <div>
-//         <img src={duck.imgURL} />
-//       </div>
-//       <div>{duck.description}</div>
-//       <div>${duck.price}</div>
-//       <div>{duck.quantity} left!</div>
-//       <button type="submit">Add to Cart</button>
-//     </div>
-//   )
-// }
 
 export default class SingleDuck extends Component{
   constructor(){
     super()
     this.state = {
-
     }
+
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   
   async handleSubmit(event){
     event.preventDefault()
-    await axios.put('api/users/:userOrGuest/cart', )
-
+    try{
+      await axios.put(`/api/users/${this.props.user.id}/cart`, {id: this.props.duck.id})
+    }catch(err){
+      console.log(err)
+    }
   }
   
   render(){
     const {duck} = this.props
+    console.log(this.props)
     return (
       <div>
         {duck.name}
@@ -48,7 +38,8 @@ export default class SingleDuck extends Component{
 }
 
 
+const mapStateToProps = (state, ownProps) => {
+  
+}
 
 
-
-// export default SingleDuck
