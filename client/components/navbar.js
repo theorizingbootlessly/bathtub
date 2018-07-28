@@ -9,7 +9,6 @@ class Navbar extends Component {
     super(props)
 
     this.handleLogout = this.handleLogout.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
     async handleLogout() {
