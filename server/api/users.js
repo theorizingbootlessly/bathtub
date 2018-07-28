@@ -36,47 +36,6 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// GET CART ITEMS
-router.post('/:userOrGuest/cart', async (req, res, next) => {
-  try {
-    const theUser = req.params.userOrGuest;
-    const user = await User.findById(theUser);
-    if (user) {
-      res.status(200).send(user.cart);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    next(err);
-  }
-})
-
-// ADD TO CART
-router.get('/:userOrGuest/cart', async (req, res, next) => {
-  try {
-    const product = req.body;
-    const theUser = req.params.userOrGuest;
-    const user = await User.findById(theUser);
-    if (!user || !product) {
-      res.sendStatus(404);
-    } else {
-      await user.addToCart(product);
-      res.status(201).send(product);
-    }
-    // if (user === 'guest') {
-      // if (!req.session.cart) {
-      //   req.session.cart = [product];
-      // } else {
-      //   req.session.cart.push(product);
-      //   res.status(201).send(product);
-      // }
-    // } else {
-
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.post("/charge", async (req, res) => {
   try {
     let {status} = await stripe.charges.create({
@@ -91,4 +50,3 @@ router.post("/charge", async (req, res) => {
     res.status(500).end();
   }
 });
-

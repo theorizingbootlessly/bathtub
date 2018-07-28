@@ -9,6 +9,23 @@ describe('User model', () => {
     return db.sync({force: true})
   })
 
+  // describe('model properties', () => {
+  //   let cody 
+
+  //   beforeEach(async () => {
+  //    cody = await User.create({
+  //       email: 'cody@puppybook.com',
+  //       password: 'bones',
+  //     })
+  //   })
+
+  //     it ('returns true if user model has a cart property', () => {
+  //       console.log(cody.cart)
+  //       expect(cody.cart).to.equal([])
+  //     })
+
+  //   })
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
