@@ -6,13 +6,23 @@ import {connect} from 'react-redux'
 class SingleDuck extends Component{
   constructor(){
     super()
+    this.state = {
+      quantity: 1
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   
+  handleChange(event){
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   async handleSubmit(event){
     event.preventDefault()
     try{
-      await axios.post(`/api/cart/${this.props.currentUser.user.currentUser.id}/cart`, {id: this.props.duck.id})
+      await axios.post(`/api/cart/${this.props.currentUser.user.currentUser.id}/cart`, {id: this.props.duck.id, quantity: this.state.quantity})
     }catch(err){
       console.log(err)
     }
@@ -29,7 +39,10 @@ class SingleDuck extends Component{
         <div>{duck.description}</div>
         <div>${duck.price}</div>
         <div>{duck.quantity} left!</div>
+        <form>
         <button type="submit" onClick={this.handleSubmit}>Add to Cart</button>
+          <input type="number" name="quantity" onChange={this.handleChange} value={this.state.quantity}></input>
+        </form>
       </div>
     )
   }
