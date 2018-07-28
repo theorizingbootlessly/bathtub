@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import {CardElement, CardSection, injectStripe} from 'react-stripe-elements';
+import axios from 'axios';
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -8,7 +9,19 @@ class CheckoutForm extends Component {
   }
 
   async handleSubmit(event) {
-
+    // event.preventDefault(); // commented out because Stripe docs did not say to include
+    let { token } = await this.props.stripe.createToken({name: "Name"});
+    // let response = await fetch("/charge", {
+    //   method: "POST",
+    //   headers: {"Content-Type": "text/plain"},
+    //   body: token.id
+    // });
+    let response = await axios.post('/api/charge', {
+      method: "POST",
+      headers: {"Content-Type": "text/plain"},
+      body: token.id
+    })
+  if (response.ok) console.log("Purchase Complete!")
   }
 
   render() {
