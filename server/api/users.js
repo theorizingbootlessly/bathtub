@@ -35,13 +35,32 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// ADD TO CART
+// GET CART ITEMS
 router.post('/:userOrGuest/cart', async (req, res, next) => {
   try {
+    const theUser = req.params.userOrGuest;
+    const user = await User.findById(theUser);
+    if (user) {
+      res.status(200).send(user.cart);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    next(err);
+  }
+})
+
+// ADD TO CART
+router.get('/:userOrGuest/cart', async (req, res, next) => {
+  try {
     const product = req.body;
-    const user = req.params.userOrGuest;
+    const theUser = req.params.userOrGuest;
+    const user = await User.findById(theUser);
     if (!user || !product) {
       res.sendStatus(404);
+    } else {
+      await user.addToCart(product);
+      res.status(201).send(product);
     }
     // if (user === 'guest') {
       // if (!req.session.cart) {
@@ -51,8 +70,7 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       //   res.status(201).send(product);
       // }
     // } else {
-    await user.addToCart(product);
-    res.status(201).send(product);
+
   } catch (err) {
     next(err);
   }
