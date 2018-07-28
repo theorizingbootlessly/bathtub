@@ -6,24 +6,8 @@ import CheckoutForm from './CheckoutForm';
 
 class Checkout extends Component {
 
-  constructor() {
-    super();
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   componentDidMount() {
     this.props.loadCart();
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  /*async*/ handleSubmit(event) {
-    event.preventDefault();
   }
 
   render() {
@@ -32,7 +16,7 @@ class Checkout extends Component {
       subtotal += (item.price * item.quantity)
     });
     return (
-      <div>
+      <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
         Your cart so far:<br />
         <ul>
           {this.props.cart.map(item => {
@@ -44,12 +28,10 @@ class Checkout extends Component {
           })}
         </ul><br />
         Subtotal: ${subtotal || 0.00}
-        <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
           <Elements>
             <CheckoutForm />
           </Elements>
-        </StripeProvider>
-      </div>
+      </StripeProvider>
     );
   }
 }
