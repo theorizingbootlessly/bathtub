@@ -25,9 +25,6 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  },
-  cart: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
@@ -40,8 +37,12 @@ User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
-User.prototype.addToCart = function(product) {
-  this.cart.push(product);
+User.prototype.addToCart = async function(product) {
+  await this.update({
+    cart: this.cart.push(product)
+  })
+   console.log(this.cart.length, this.cart)
+
 }
 
 /**
