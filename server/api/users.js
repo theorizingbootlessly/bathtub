@@ -16,6 +16,16 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:userID', async (req, res, next) => {
+  try {
+    let result = await User.findOne({where: {id: req.params.userID}})
+    console.log("user: ", result)
+    res.json(result)
+  } catch (err){
+    console.log(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     let newUser = await User.create(req.body)
