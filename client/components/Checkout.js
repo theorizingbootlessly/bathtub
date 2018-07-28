@@ -42,12 +42,12 @@ class Checkout extends Component {
           {this.props.cart.map(item => {
             return (
               <li key={item.id}>
-                {item.name}
+                {item.name} -
                 {item.price}<br />
               </li>
             );
           })}
-        </ul>
+        </ul><br />
         Subtotal: ${subtotal || 0.00}
         <form onSubmit={this.handleSubmit}>
           <input
