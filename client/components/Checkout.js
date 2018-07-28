@@ -10,8 +10,6 @@ class Checkout extends Component {
     this.props.loadCart();
   }
 
-  {/* commit test */}
-
   render() {
     let subtotal = 0;
     this.props.cart.forEach(item => {
