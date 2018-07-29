@@ -3,11 +3,38 @@ import {Elements, StripeProvider} from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm'
 import { fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
+import Purchase from '../../server/db/models/purchase';
 
 class Checkout extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      firstName: '',
+      lastName: '',
+      address: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   componentDidMount() {
     this.props.loadCart();
+  }
+
+  handleChange() {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  async handleSubmit() {
+    await Purchase.create({
+      date: String(new Date()),
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      address: this.state.address
+    });
   }
 
   render() {
@@ -30,9 +57,15 @@ class Checkout extends Component {
         Subtotal: ${subtotal || 0.00}<br />
         Tax (8%): ${subtotal * .08 || 0.00}<br />
         <strong>Total: ${((subtotal * .08) + subtotal) || 0.00}</strong>
+        <label forhtml="address">Address</label>
+          <input
+            type="text"
+            value={this.state.address}
+            onChange={this.handleChange}
+            required />
         <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
           <Elements>
-            <CheckoutForm />
+            <CheckoutForm handleSubmit={this.handleSubmit} />
           </Elements>
         </StripeProvider>
       </div>
