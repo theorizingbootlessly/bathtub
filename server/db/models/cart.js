@@ -10,4 +10,11 @@ const Cart = db.define('cart', {
   }
 })
 
+//Instance Methods
+Cart.prototype.addToQuantity = async function(num){
+  const currentQuant = this.getDataValue('quantity')
+  const newQuant = currentQuant + Number(num)
+  await this.update({quantity: newQuant})
+}
+
 module.exports = Cart

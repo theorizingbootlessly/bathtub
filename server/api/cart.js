@@ -14,6 +14,12 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       }
     })
 
+    const itemExists = await Cart.findOne({
+      where: {
+        productId: req.body.id
+      }
+    })
+
     if (!cart || !product) {
       res.sendStatus(404);
     }
@@ -26,13 +32,14 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       // }
     // } 
     
+    else if(itemExists){
+      await itemExists.addToQuantity(req.body.quantity)
+    } 
     else {
-    await Cart.findOrCreate({
-      where: {
+     await Cart.create({
         productId: req.body.id,
         quantity: req.body.quantity,
-        userId: req.params.userOrGuest
-      }
+        userId: req.params.userOrGuest 
     });
     res.status(201).send(product);
   } 
