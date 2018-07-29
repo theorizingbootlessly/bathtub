@@ -3,8 +3,6 @@ import {Elements, StripeProvider} from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm'
 import { fetchCart } from '../store/cart';
 import { connect } from 'react-redux';
-import {Elements, StripeProvider} from 'react-stripe-elements';
-import CheckoutForm from './CheckoutForm';
 
 class Checkout extends Component {
 

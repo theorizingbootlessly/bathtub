@@ -20,7 +20,6 @@ const App = () => {
         <Route exact path="/products" component={DuckList} />
         <Route exact path='/' component={LandingPage} />
         <Route exact path='/home' component={LandingPage} />
-        <Route exact path='/checkoutform'
         </Switch>
 
 
