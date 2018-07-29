@@ -28,7 +28,7 @@ class Checkout extends Component {
           })}
         </ul><br />
         Subtotal: ${subtotal || 0.00}<br />
-        Tax (8%): ${subtotal * .08}<br />
+        Tax (8%): ${subtotal * .08 || 0.00}<br />
         <strong>Total: ${((subtotal * .08) + subtotal) || 0.00}</strong>
         <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
           <Elements>
