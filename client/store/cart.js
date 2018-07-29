@@ -80,7 +80,7 @@ export const updateItemInCart = (id, quantity) => dispatch => {
 
 
 //Reducer
-const cartReducer = (state = defaultCart, action) => {
+export const cartReducer = (state = defaultCart, action) => {
   switch (action.type) {
     case GET_CART:
       return action.cart;
