@@ -89,21 +89,6 @@ const createApp = () => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 
-  app.post('/charge', async (req, res) => {
-    try {
-      let {status} = await stripe.charges.create({
-        amount: 2000,
-        currency: "usd",
-        description: "An example charge",
-        source: req.body
-      });
-
-      res.json({status});
-    } catch (err) {
-      res.status(500).end();
-    }
-  });
-
   // error handling endware
   app.use((err, req, res, next) => {
     console.error(err)
