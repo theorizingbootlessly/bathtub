@@ -106,7 +106,7 @@ export default function(state = initialState, action) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return initialState
+      return {...state, currentUser: {}}
     case GET_USERS:
       return {...state, users: action.users}
     case ADD_USER:
