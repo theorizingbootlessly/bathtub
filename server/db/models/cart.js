@@ -13,9 +13,7 @@ const Cart = db.define('cart', {
 //Instance Methods
 Cart.prototype.addToQuantity = async function(num){
   const currentQuant = this.getDataValue('quantity')
-  console.log(typeof currentQuant, typeof num)
   const newQuant = currentQuant + Number(num)
-  console.log(newQuant)
   await this.update({quantity: newQuant})
 }
 
