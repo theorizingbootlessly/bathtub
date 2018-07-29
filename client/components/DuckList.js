@@ -5,7 +5,7 @@ import {fetchDucks} from '../store/products'
 import SingleDuck from './SingleDuck'
 
 class DuckList extends React.Component {
-  async componentDidMount() {
+  componentDidMount() {
     this.props.loadDucks()
   }
   render() {

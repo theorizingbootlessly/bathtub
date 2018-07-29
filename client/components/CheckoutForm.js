@@ -1,30 +1,31 @@
 import React, {Component} from 'react';
-import {CardElement, CardSection, injectStripe} from 'react-stripe-elements';
-import axios from 'axios';
+import {CardElement, injectStripe} from 'react-stripe-elements';
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      complete: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit(event) {
-    // event.preventDefault(); // commented out because Stripe docs did not say to include
-    let { token } = await this.props.stripe.createToken({name: "Name"});
-    // let response = await fetch("/charge", {
-    //   method: "POST",
-    //   headers: {"Content-Type": "text/plain"},
-    //   body: token.id
-    // });
-    let response = await axios.post('/api/charge', {
+  async handleSubmit(ev) {
+    let {token} = await this.props.stripe.createToken({name: "Name"});
+    let response = await fetch("/users/charge", {
       method: "POST",
       headers: {"Content-Type": "text/plain"},
       body: token.id
-    })
-  if (response.ok) console.log("Purchase Complete!")
+    });
+
+    if (response.ok) {
+      this.setState({ complete: true });
+    }
   }
 
+
   render() {
+    if (this.state.complete) return <h1>Purchase Complete</h1>
     return (
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>

@@ -23,6 +23,7 @@ class Navbar extends Component {
       <Link to='/home'>Home</Link>
       {userIsLoggedIn ? <Link to='/home' onClick={this.handleLogout}>Logout</Link> : <Link to='/login'>Login</Link>}
       <Link to='/cart'>Cart</Link>
+      <Link to='/checkout'>Checkout</Link>
       <Link to='/products'>Products</Link>
       {userIsLoggedIn ? null : <Link to='/signup'>Sign-up</Link>}
         </nav>
