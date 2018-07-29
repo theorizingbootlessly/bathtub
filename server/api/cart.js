@@ -13,9 +13,15 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       }
     })
 
+    const itemExists = await Cart.findOne({
+      where: {
+        productId: req.body.id
+      }
+    })
+
     if (!cart || !product) {
       res.sendStatus(404)
-    } else {
+    } else if (itemExists) {
       // if (user === 'guest') {
       // if (!req.session.cart) {
       //   req.session.cart = [product];
@@ -24,13 +30,12 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       //   res.status(201).send(product);
       // }
       // }
-
-      await Cart.findOrCreate({
-        where: {
-          productId: req.body.id,
-          quantity: req.body.quantity,
-          userId: req.params.userOrGuest
-        }
+      await itemExists.addToQuantity(req.body.quantity)
+    } else {
+      await Cart.create({
+        productId: req.body.id,
+        quantity: req.body.quantity,
+        userId: req.params.userOrGuest
       })
       res.status(201).send(product)
     }
