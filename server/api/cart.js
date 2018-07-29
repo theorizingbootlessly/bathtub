@@ -1,6 +1,15 @@
 const router = require('express').Router()
 const {Cart} = require('../db/models')
 
+router.get('/:currentUser', async (req, res, next) => {
+  const userCart = await Cart.findAll({
+    where: {
+      userId: req.params.user
+    }
+  })
+  res.send(userCart)
+})
+
 router.post('/:userOrGuest/cart', async (req, res, next) => {
   try {
     const product = {

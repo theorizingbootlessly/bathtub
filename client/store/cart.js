@@ -65,15 +65,20 @@ const updateItem = (id, quantity) => ({
 
 //Thunks
 
-export const fetchCart = () => async dispatch => {
-  try {
-    const response = await axios.get(`/api/users/:userOrGuest/cart`)
-    const cart = response.data
-    dispatch(getCart(cart))
-  } catch (err) {
-    console.log(err)
-  }
+export const fetchCart = currentUser => async dispatch => {
+  const response = await axios.get(`/api/cart/${currentUser}`)
+  console.log(response)
 }
+
+// export const fetchCart = () => async dispatch => {
+//   try {
+//     const response = await axios.get(`/api/users/:userOrGuest/cart`)
+//     const cart = response.data
+//     dispatch(getCart(cart))
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
 export const deleteItemFromCart = id => dispatch => {
   try {
@@ -100,7 +105,7 @@ export const updateItemInCart = (id, quantity) => dispatch => {
 }
 
 //Reducer
-const cartReducer = (state = defaultCart, action) => {
+const cartReducer = (state = [], action) => {
   switch (action.type) {
     case GET_CART:
       return action.cart

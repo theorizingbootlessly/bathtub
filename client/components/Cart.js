@@ -11,6 +11,11 @@ class Cart extends Component {
     this.handleDeleteOne = this.handleDeleteOne.bind(this)
   }
 
+  componentDidMount() {
+    this.props.loadCart(this.props.user.currentUser.userId)
+    // console.log('user logged in as: ', this.props.user.currentUser.userId)
+  }
+
   handleDelete(event, id) {
     event.preventDefault()
     this.props.deleteItem(id)
@@ -65,6 +70,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
+  // console.log(state.cart)
   return {
     cart: state.cart,
     user: state.user
@@ -73,7 +79,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //loadCart: () => dispatch(fetchCart()),
+    loadCart: userId => dispatch(fetchCart(userId)),
     deleteItem: id => dispatch(deleteItemFromCart(id)),
     deleteOne: id => dispatch(deleteOneDuck(id))
   }
