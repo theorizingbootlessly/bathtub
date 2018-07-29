@@ -1,16 +1,9 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const { STRING } = Sequelize;
+const { STRING, TEXT } = Sequelize;
 
 const Purchase = db.define('purchase', {
-  date: {
-    type: STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
   firstName: {
     type: STRING,
     allowNull: false
@@ -22,8 +15,22 @@ const Purchase = db.define('purchase', {
       notEmpty: true
     }
   },
+  email: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
   address: {
     type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  cart: {
+    type: TEXT,
     allowNull: false,
     validate: {
       notEmpty: true
