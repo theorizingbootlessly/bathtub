@@ -5,7 +5,6 @@ import {renderCart} from '../store/cart'
 import {createToken} from '../store/token'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import { toggleSuccess, toggleError } from '../store/checkComplete';
 
 class Checkout extends Component {
   constructor(props) {
