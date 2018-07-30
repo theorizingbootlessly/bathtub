@@ -29,7 +29,7 @@ class SingleDuck extends Component {
           buyerId: buyerId,
           productId: this.props.duck.id,
           quantity: this.state.quantity,
-          // imgUrl: this.props.duck.imgURL,
+          imgURL: this.props.duck.imgURL,
           name: this.props.duck.name,
           price: this.props.duck.price
         }
