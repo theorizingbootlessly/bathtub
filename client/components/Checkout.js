@@ -14,8 +14,9 @@ class Checkout extends Component {
       lastName: '',
       email: '',
       address: '',
-      cart: props.cart,
       total: '',
+      subtotal: '',
+      tax: '',
       checkComplete: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -24,7 +25,18 @@ class Checkout extends Component {
 
   componentDidMount() {
     this.props.loadCart(this.props.currentUser.id)
-    this.props.makeToken(this.props.currentUser.id, this.state.total)
+    let subtotal = 0
+    this.props.cart.forEach(item => {
+      subtotal += item.price * item.quantity
+    })
+    subtotal = Number(subtotal).toFixed(2)
+    const total = (Number((subtotal * 0.08)) + Number(subtotal)).toFixed(2)
+    this.setState({
+      total: total,
+      subtotal: subtotal,
+      tax: (subtotal * 0.08).toFixed(2)
+    })
+    this.props.makeToken(this.props.currentUser.id, total)
   }
 
   handleChange(event) {
@@ -55,13 +67,12 @@ class Checkout extends Component {
   }
 
   render() {
-    let subtotal = 0
-    this.props.cart.forEach(item => {
-      subtotal += item.price * item.quantity
-    })
-    subtotal = (subtotal).toFixed(2)
-    const tax = (subtotal * 0.08).toFixed(2)
-    const total = (Number(tax) + Number(subtotal)).toFixed(2)
+    // let subtotal = 0
+    // this.props.cart.forEach(item => {
+    //   subtotal += item.price * item.quantity
+    // })
+    // subtotal = Number(subtotal).toFixed(2)
+    // const tax = (subtotal * 0.08).toFixed(2)
     return (
       <div>
         Your cart so far:<br />
@@ -76,11 +87,11 @@ class Checkout extends Component {
           })}
         </ul>
         <br />
-        Subtotal: ${subtotal}
+        Subtotal: ${this.state.subtotal}
         <br />
-        Tax (8%): ${tax}
+        Tax (8%): ${this.state.tax}
         <br />
-        <strong>Total: ${total}</strong>
+        <strong>Total: ${this.state.total}</strong>
         <form onSubmit={this.handleSubmit}>
           <label forhtml="firstName">First name: </label>
           <input
