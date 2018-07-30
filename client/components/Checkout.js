@@ -7,14 +7,14 @@ import axios from 'axios';
 
 class Checkout extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: '',
       lastName: '',
       email: '',
       address: '',
-      cart: ''
+      cart: props.cart,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,9 +22,6 @@ class Checkout extends Component {
 
   componentDidMount() {
     this.props.loadCart();
-    this.setState({
-      cart: this.props.cart
-    });
   }
 
   handleChange(event) {
