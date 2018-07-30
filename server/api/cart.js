@@ -2,12 +2,16 @@ const router = require('express').Router()
 const {Cart} = require('../db/models')
 
 router.post('/:userId', async (req, res, next) => {
-  const userCart = await Cart.findAll({
-    where: {
-      userId: req.params.userId
-    } // eager load option: ?
-  })
-  res.send(userCart)
+  try {
+    const userCart = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      } // eager load option: ?
+    })
+    res.send(userCart)
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.post('/', (req, res, next) => {

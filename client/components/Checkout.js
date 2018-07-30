@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 import {renderCart} from '../store/cart'
+import {createToken} from '../store/token'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import { toggleSuccess, toggleError } from '../store/checkComplete';
 
 class Checkout extends Component {
   constructor(props) {
@@ -14,14 +16,15 @@ class Checkout extends Component {
       email: '',
       address: '',
       cart: props.cart,
-      checkComplete: ''
+      total: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.loadCart()
+    this.props.loadCart(this.props.currentUser.id)
+    this.props.makeToken(this.props.currentUser.id, this.state.total)
   }
 
   handleChange(event) {
@@ -31,27 +34,20 @@ class Checkout extends Component {
   }
 
   async handleSubmit() {
-    let cartInStringForm = ''
-    this.state.cart.forEach(item => {
-      cartInStringForm += `id: ${item.id}, quantity: ${item.quantity}. `
-    })
+    console.log('this.props.cart is', this.props.cart)
     try {
       await axios.post('/api/purchase', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
         address: this.state.address,
-        cart: cartInStringForm,
+        cart: 'need to get cartId',
         userId: this.props.currentUser.id || null
       })
-      this.setState({
-        checkComplete: 'success'
-      })
+      this.props.checkCompleteSuccess()
     } catch (error) {
       console.log(error)
-      this.setState({
-        checkComplete: 'error'
-      })
+      this.props.checkCompleteError()
     }
   }
 
@@ -60,9 +56,9 @@ class Checkout extends Component {
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
     })
-    subtotal = subtotal || 0.0
-    const tax = subtotal * 0.08 || 0.0
-    const total = tax + subtotal || 0.0
+    subtotal = subtotal || 0.00
+    const tax = subtotal * 0.08 || 0.00
+    const total = tax + subtotal || 0.00
     return (
       <div>
         Your cart so far:<br />
@@ -125,7 +121,9 @@ class Checkout extends Component {
           <Elements>
             <CheckoutForm
               handleSubmit={this.handleSubmit}
-              checkComplete={this.state.checkComplete}
+              checkComplete={this.props.checkComplete}
+              token={this.props.token}
+              total={this.state.total}
             />
           </Elements>
         </StripeProvider>
@@ -137,14 +135,18 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart,
-    // user: state.user,
-    currentUser: state.user.currentUser
+    token: state.token,
+    currentUser: state.user.currentUser,
+    checkComplete: state.checkComplete
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCart: () => dispatch(renderCart())
+    loadCart: id => dispatch(renderCart(id)),
+    makeToken: (id, total) => dispatch(createToken(id, total)),
+    checkCompleteSuccess: () => dispatch(toggleSuccess()),
+    checkCompleteError: () => dispatch(toggleError())
   }
 }
 
