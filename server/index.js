@@ -59,7 +59,7 @@ const createApp = () => {
     session({
       secret: process.env.SESSION_SECRET || 'we sell ducks',
       store: sessionStore,
-      resave: true,
+      resave: false,
       saveUninitialized: true
     })
   )
