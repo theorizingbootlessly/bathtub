@@ -59,9 +59,9 @@ class Checkout extends Component {
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
     })
-    subtotal = subtotal || 0.00
-    const tax = subtotal * 0.08 || 0.00
-    const total = tax + subtotal || 0.00
+    subtotal = (subtotal).toFixed(2)
+    const tax = (subtotal * 0.08).toFixed(2)
+    const total = (Number(tax) + Number(subtotal)).toFixed(2)
     return (
       <div>
         Your cart so far:<br />
