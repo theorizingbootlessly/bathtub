@@ -21,11 +21,12 @@ class SingleDuck extends Component {
   async handleSubmit(event) {
     event.preventDefault()
     try {
-      console.log('checking for duck profile', this.props.duck.imgURL)
+      const buyerId = this.props.currentUser.email ? this.props.currentUser.id : 'sessionId'
       await axios.post(
-        `/api/cart/${this.props.currentUser.user.currentUser.id}/cart`,
+        '/api/cart',
         {
-          id: this.props.duck.id,
+          buyerId: buyerId,
+          productId: this.props.duck.id,
           quantity: this.state.quantity,
           imgURL: this.props.duck.imgURL,
           name: this.props.duck.name,
@@ -65,9 +66,8 @@ class SingleDuck extends Component {
 }
 
 const mapStateToProps = state => {
-  const getUser = state
   return {
-    currentUser: getUser
+    currentUser: state.user.currentUser
   }
 }
 
