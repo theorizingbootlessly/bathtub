@@ -6,9 +6,8 @@ import user from './user'
 import cart from './cart'
 import products from './products'
 import token from './token'
-import checkComplete from './checkComplete'
 
-export const reducer = combineReducers({user, cart, products, token, checkComplete})
+export const reducer = combineReducers({user, cart, products, token})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
