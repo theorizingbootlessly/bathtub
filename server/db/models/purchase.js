@@ -1,12 +1,15 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const { STRING, TEXT } = Sequelize;
+const {STRING, TEXT} = Sequelize
 
 const Purchase = db.define('purchase', {
   firstName: {
     type: STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   lastName: {
     type: STRING,
@@ -36,6 +39,6 @@ const Purchase = db.define('purchase', {
       notEmpty: true
     }
   }
-});
+})
 
 module.exports = Purchase

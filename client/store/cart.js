@@ -70,19 +70,9 @@ export const renderCart = currentUser => async dispatch => {
   dispatch(getCart(response.data))
 }
 
-export const fetchCart = () => async dispatch => {
-  try {
-    const response = await axios.get(`/api/users/:userID`)
-    const cart = response.data.cart
-    dispatch(getCart(cart))
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-// export const fetchCart = () => async dispatch => {
+// export const fetchCart = userId => async dispatch => {
 //   try {
-//     const response = await axios.get(`/api/users/:userOrGuest/cart`)
+//     const response = await axios.get(`/api/users/${userId}`)
 //     const cart = response.data
 //     dispatch(getCart(cart))
 //   } catch (err) {
