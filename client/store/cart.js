@@ -67,9 +67,15 @@ const updateItem = (id, quantity) => ({
 
 export const fetchCart = () => async dispatch => {
   try {
+<<<<<<< HEAD
     const response = await axios.get(`/api/users/:userOrGuest/cart`)
     const cart = response.data
     dispatch(getCart(cart))
+=======
+   const response = await axios.get(`/api/users/:userID`);
+   const cart = response.data.cart;
+    dispatch(getCart(cart));
+>>>>>>> 0660281a7dee6c717257797b4b338dd4f40b6968
   } catch (err) {
     console.log(err)
   }
