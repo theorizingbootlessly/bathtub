@@ -29,9 +29,19 @@ class CheckoutForm extends Component {
   render() {
     const {checkComplete} = this.props
     if (checkComplete === 'success') {
-      return <h1>Purchase Complete</h1>
+      return (
+        <div>
+          {alert('Purchase complete!')}
+          {this.props.clearCheckComplete()}
+        </div>
+      )
     } else if (checkComplete === 'error') {
-      return <h1>Purchase failed. Please make sure all fields are filled in correctly.</h1>
+      return (
+        <div>
+          {alert('Purchase failed. Please make sure all fields are filled in correctly.')}
+          {this.props.clearCheckComplete()}
+        </div>
+      )
     }
     return (
       <div className="checkout">

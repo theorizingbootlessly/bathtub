@@ -4,6 +4,7 @@ import CheckoutForm from './CheckoutForm'
 import {renderCart} from '../store/cart'
 import {createToken} from '../store/token'
 import {createPurchase} from '../store/purchase'
+import {clearCheckComplete} from '../store/checkComplete'
 import {connect} from 'react-redux'
 
 class Checkout extends Component {
@@ -16,8 +17,7 @@ class Checkout extends Component {
       address: '',
       total: '',
       subtotal: '',
-      tax: '',
-      checkComplete: ''
+      tax: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,7 +25,6 @@ class Checkout extends Component {
 
   componentDidMount() {
     this.props.loadCart(this.props.currentUser.id)
-
     let subtotal = 0
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
@@ -37,7 +36,6 @@ class Checkout extends Component {
       subtotal: subtotal,
       tax: (subtotal * 0.08).toFixed(2)
     })
-
     this.props.makeToken(this.props.currentUser.id, total)
   }
 
@@ -48,25 +46,15 @@ class Checkout extends Component {
   }
 
   handleSubmit() {
-    try {
-      const newPurchase = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        address: this.state.address,
-        cart: 'holding for cartId',
-        userId: this.props.currentUser.id || null
-      }
-      this.props.makePurchase(newPurchase)
-      this.setState({
-        checkComplete: 'success'
-      })
-    } catch (error) {
-      console.log(error)
-      this.setState({
-        checkComplete: 'error'
-      })
+    const newPurchase = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      address: this.state.address,
+      cart: 'holding for cartId',
+      userId: this.props.currentUser.id || null
     }
+    this.props.makePurchase(newPurchase)
   }
 
   render() {
@@ -132,9 +120,10 @@ class Checkout extends Component {
           <Elements>
             <CheckoutForm
               handleSubmit={this.handleSubmit}
-              checkComplete={this.state.checkComplete}
+              checkComplete={this.props.checkComplete}
               token={this.props.token}
               total={this.state.total}
+              clearCheckComplete={this.props.clearCheckComplete}
             />
           </Elements>
         </StripeProvider>
@@ -147,7 +136,8 @@ const mapStateToProps = state => {
   return {
     cart: state.cart,
     token: state.token,
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    checkComplete: state.checkComplete
   }
 }
 
@@ -155,7 +145,8 @@ const mapDispatchToProps = dispatch => {
   return {
     loadCart: id => dispatch(renderCart(id)),
     makeToken: (id, total) => dispatch(createToken(id, total)),
-    makePurchase: purchase => dispatch(createPurchase(purchase))
+    makePurchase: purchase => dispatch(createPurchase(purchase)),
+    clearCheckComplete: () => dispatch(clearCheckComplete())
   }
 }
 
