@@ -30,7 +30,6 @@ router.post('/', async (req, res, next) => {
   try {
     let newUser = await User.create(req.body)
     req.login(newUser, err => (err ? next(err) : res.json(newUser)))
-    // res.json(newUser)
   } catch (err){
     next(err)
   }
