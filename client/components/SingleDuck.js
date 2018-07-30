@@ -22,7 +22,6 @@ class SingleDuck extends Component {
     event.preventDefault()
     try {
       const buyerId = this.props.currentUser.email ? this.props.currentUser.id : 'sessionId'
-      console.log('from front',buyerId)
       await axios.post(
         '/api/cart',
         {

@@ -14,7 +14,6 @@ router.post('/', (req, res, next) => {
   
   if (req.body.buyerId === 'sessionId'){
     addToCartSession(req,res,next)
-    console.log(req.session.cart)
   } else {
     addToCartUser(req,res,next)
   } 
