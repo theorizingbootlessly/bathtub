@@ -1,13 +1,56 @@
 const router = require('express').Router()
 const {Cart, Product, User} = require('../db/models')
 
+// route for rendering Cart items
 router.post('/:userId', async (req, res, next) => {
-  const userCart = await Cart.findAll({
-    where: {
-      userId: req.params.userId
-    } // eager load option: ?
-  })
-  res.send(userCart)
+  try {
+    const userCart = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    res.send(userCart)
+  } catch (error) {
+    console.log('error in render cart route')
+  }
+})
+
+// route for updating quantity of cart item
+
+router.put('/:userId/:productId', async (req, res, next) => {
+  try {
+    if (req.body.quantity === 1) {
+      await Cart.destroy({
+        where: {
+          userId: req.params.userId,
+          productId: req.params.productId,
+          quantity: 1
+        }
+      })
+    }
+
+    await Cart.update(
+      {
+        quantity: req.body.quantity - 1
+      },
+      {
+        where: {
+          userId: req.params.userId,
+          productId: req.params.productId
+        }
+      }
+    )
+
+    const findByUserId = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    console.log(findByUserId)
+    res.json(findByUserId)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 router.post('/:userOrGuest/cart', async (req, res, next) => {

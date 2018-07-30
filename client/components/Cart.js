@@ -20,9 +20,9 @@ class Cart extends Component {
     this.props.deleteItem(id)
   }
 
-  handleDeleteOne(event, id) {
+  handleDeleteOne(event, item) {
     event.preventDefault()
-    this.props.deleteOne(id)
+    this.props.deleteOne(item)
   }
 
   render() {
@@ -46,10 +46,7 @@ class Cart extends Component {
               [Remove these kinds of ducks]
             </Link>
             <br />
-            <Link
-              to="/cart"
-              onClick={() => this.handleDeleteOne(event, item.id)}
-            >
+            <Link to="/cart" onClick={() => this.handleDeleteOne(event, item)}>
               [Remove ONE of this kind of duck]
             </Link>
           </li>
@@ -67,7 +64,6 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state.cart)
   return {
     cart: state.cart,
     user: state.user
@@ -78,7 +74,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadCart: userId => dispatch(renderCart(userId)),
     deleteItem: id => dispatch(deleteItemFromCart(id)),
-    deleteOne: id => dispatch(deleteOneDuck(id))
+    deleteOne: item => dispatch(deleteOneDuck(item))
   }
 }
 
