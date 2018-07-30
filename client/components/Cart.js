@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchCart, deleteItemFromCart, deleteOneDuck} from '../store/cart'
+import {renderCart, deleteItemFromCart, deleteOneDuck} from '../store/cart'
 import axios from 'axios'
 
 class Cart extends Component {
@@ -76,7 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCart: userId => dispatch(fetchCart(userId)),
+    loadCart: userId => dispatch(renderCart(userId)),
     deleteItem: id => dispatch(deleteItemFromCart(id)),
     deleteOne: id => dispatch(deleteOneDuck(id))
   }

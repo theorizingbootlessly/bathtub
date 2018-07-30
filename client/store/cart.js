@@ -65,9 +65,19 @@ const updateItem = (id, quantity) => ({
 
 //Thunks
 
-export const fetchCart = currentUser => async dispatch => {
+export const renderCart = currentUser => async dispatch => {
   const response = await axios.post(`/api/cart/${currentUser}`)
   dispatch(getCart(response.data))
+}
+
+export const fetchCart = () => async dispatch => {
+  try {
+    const response = await axios.get(`/api/users/:userID`)
+    const cart = response.data.cart
+    dispatch(getCart(cart))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 // export const fetchCart = () => async dispatch => {
