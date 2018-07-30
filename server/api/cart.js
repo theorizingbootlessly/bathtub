@@ -5,12 +5,7 @@ router.post('/:userId', async (req, res, next) => {
   const userCart = await Cart.findAll({
     where: {
       userId: req.params.userId
-    },
-    include: [
-      {
-        model: User // need to be Product model
-      }
-    ]
+    } // eager load option: ?
   })
   res.send(userCart)
 })
@@ -50,7 +45,10 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
       await Cart.create({
         productId: req.body.id,
         quantity: req.body.quantity,
-        userId: req.params.userOrGuest
+        userId: req.params.userOrGuest,
+        imgURL: req.body.imgURL,
+        name: req.body.name,
+        price: req.body.price
       })
       res.status(201).send(product)
     }

@@ -67,7 +67,6 @@ const updateItem = (id, quantity) => ({
 
 export const fetchCart = currentUser => async dispatch => {
   const response = await axios.post(`/api/cart/${currentUser}`)
-  console.log('response from thunk', response.data)
   dispatch(getCart(response.data))
 }
 

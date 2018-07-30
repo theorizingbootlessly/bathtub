@@ -32,15 +32,13 @@ class Cart extends Component {
       <div>
         {this.props.cart.map(item => (
           <li key={item.id}>
-            <img src={item.imgUrl} />
-            <br />
             {item.name}
+            <br />
+            <img src={item.imgURL} />
             <br />
             {item.color}
             <br />
-            {item.description}
-            <br />
-            {item.price}
+            ${item.price}
             <br />
             Quantity: {item.quantity}
             <br />

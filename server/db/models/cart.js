@@ -7,6 +7,15 @@ const Cart = db.define('cart', {
   },
   quantity: {
     type: Sequelize.INTEGER
+  },
+  imgURL: {
+    type: Sequelize.TEXT
+  },
+  name: {
+    type: Sequelize.STRING
+  },
+  price: {
+    type: Sequelize.INTEGER
   }
 })
 
