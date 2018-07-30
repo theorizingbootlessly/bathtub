@@ -15,9 +15,8 @@ const Cart = require('./cart')
  * instead of: const User = require('../db/models/user')
  */
 
- Cart.belongsTo(User)
- User.hasOne(Cart)
- 
+Cart.belongsTo(User)
+User.hasOne(Cart)
 module.exports = {
   User,
   Product,

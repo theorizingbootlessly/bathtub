@@ -1,14 +1,17 @@
 const router = require('express').Router()
-const {Cart} = require('../db/models')
+const {Cart, Product, User} = require('../db/models')
 
-router.get('/:currentUser', async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   const userCart = await Cart.findAll({
     where: {
-      userId: req.params.user
-    }
+      userId: req.params.userId
+    },
+    include: [
+      {
+        model: User // need to be Product model
+      }
+    ]
   })
-  console.log(userCart)
-  // console.log('user cart', userCart)
   res.send(userCart)
 })
 
@@ -26,7 +29,8 @@ router.post('/:userOrGuest/cart', async (req, res, next) => {
 
     const itemExists = await Cart.findOne({
       where: {
-        productId: req.body.id
+        productId: req.body.id,
+        userId: req.params.userOrGuest
       }
     })
 

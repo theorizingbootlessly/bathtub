@@ -12,8 +12,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.loadCart(this.props.user.currentUser.userId)
-    // console.log('user logged in as: ', this.props.user.currentUser.userId)
+    this.props.loadCart(this.props.user.currentUser.id)
   }
 
   handleDelete(event, id) {
