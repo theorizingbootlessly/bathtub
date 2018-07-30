@@ -8,35 +8,35 @@ const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 //Dummy data
-const defaultCart = [
-  {
-    id: 7,
-    name: 'Great Duck',
-    description: 'Scientifically the greatest duck',
-    price: 3.99,
-    imgUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-    quantity: 9
-  },
-  {
-    id: 8,
-    name: 'WonderDuck',
-    description: 'Heroic duck at a heroic price',
-    price: 4.99,
-    imgUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-    quantity: 8
-  },
-  {
-    id: 9,
-    name: 'Magic Duck',
-    description: 'Magical duck at a magical price',
-    price: 9.99,
-    imgUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-    quantity: 7
-  }
-]
+// const defaultCart = [
+//   {
+//     id: 7,
+//     name: 'Great Duck',
+//     description: 'Scientifically the greatest duck',
+//     price: 3.99,
+//     imgUrl:
+//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
+//     quantity: 9
+//   },
+//   {
+//     id: 8,
+//     name: 'WonderDuck',
+//     description: 'Heroic duck at a heroic price',
+//     price: 4.99,
+//     imgUrl:
+//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
+//     quantity: 8
+//   },
+//   {
+//     id: 9,
+//     name: 'Magic Duck',
+//     description: 'Magical duck at a magical price',
+//     price: 9.99,
+//     imgUrl:
+//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
+//     quantity: 7
+//   }
+// ]
 
 //Action creators
 
@@ -67,7 +67,7 @@ const updateItem = (id, quantity) => ({
 
 export const fetchCart = currentUser => async dispatch => {
   const response = await axios.get(`/api/cart/${currentUser}`)
-  console.log(response)
+  console.log('response from thunk', response.data)
 }
 
 // export const fetchCart = () => async dispatch => {

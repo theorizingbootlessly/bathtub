@@ -7,6 +7,8 @@ router.get('/:currentUser', async (req, res, next) => {
       userId: req.params.user
     }
   })
+  console.log(userCart)
+  // console.log('user cart', userCart)
   res.send(userCart)
 })
 
