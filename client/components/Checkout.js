@@ -3,8 +3,8 @@ import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 import {renderCart} from '../store/cart'
 import {createToken} from '../store/token'
+import {createPurchase} from '../store/purchase'
 import {connect} from 'react-redux'
-import axios from 'axios'
 
 class Checkout extends Component {
   constructor(props) {
@@ -47,16 +47,17 @@ class Checkout extends Component {
     })
   }
 
-  async handleSubmit() {
+  handleSubmit() {
     try {
-      await axios.post('/api/purchase', {
+      const newPurchase = {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
         address: this.state.address,
-        cart: 'need to get cartId',
+        cart: 'holding for cartId',
         userId: this.props.currentUser.id || null
-      })
+      }
+      this.props.makePurchase(newPurchase)
       this.setState({
         checkComplete: 'success'
       })
@@ -153,7 +154,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadCart: id => dispatch(renderCart(id)),
-    makeToken: (id, total) => dispatch(createToken(id, total))
+    makeToken: (id, total) => dispatch(createToken(id, total)),
+    makePurchase: purchase => dispatch(createPurchase(purchase))
   }
 }
 
