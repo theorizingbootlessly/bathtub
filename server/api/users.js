@@ -29,6 +29,7 @@ router.get('/:userID', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let newUser = await User.create(req.body)
+    req.session.loggedIn = true
     req.login(newUser, err => (err ? next(err) : res.json(newUser)))
   } catch (err){
     next(err)

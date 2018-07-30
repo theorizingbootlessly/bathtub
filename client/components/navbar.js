@@ -13,8 +13,11 @@ class Navbar extends Component {
 
   async componentDidMount(){
     let result = await axios.get('/auth/me')
-    let user = result.data
-    this.props.setCurrentUser(user)
+
+    if (result.data.loggedIn){
+      this.props.setCurrentUser(result.data.user)
+    }
+
   }
 
   async handleLogout() {
