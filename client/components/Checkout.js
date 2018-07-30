@@ -24,7 +24,7 @@ class Checkout extends Component {
   }
 
   componentDidMount() {
-    this.props.loadCart(this.props.currentUser.id)
+    this.props.loadCart(this.props.user.currentUser.id)
     let subtotal = 0
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
