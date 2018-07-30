@@ -7,11 +7,20 @@ const Cart = db.define('cart', {
   },
   quantity: {
     type: Sequelize.INTEGER
+  },
+  imgURL: {
+    type: Sequelize.TEXT
+  },
+  name: {
+    type: Sequelize.STRING
+  },
+  price: {
+    type: Sequelize.INTEGER
   }
 })
 
 //Instance Methods
-Cart.prototype.addToQuantity = async function(num){
+Cart.prototype.addToQuantity = async function(num) {
   const currentQuant = this.getDataValue('quantity')
   const newQuant = currentQuant + Number(num)
   await this.update({quantity: newQuant})

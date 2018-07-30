@@ -17,13 +17,11 @@ const Purchase = require('./purchase')
  * instead of: const User = require('../db/models/user')
  */
 
- Cart.belongsTo(User)
- User.hasOne(Cart)
+Cart.belongsTo(User)
+User.hasOne(Cart)
 
- Purchase.belongsTo(User)
- User.hasMany(Purchase)
-
-
+Purchase.belongsTo(User)
+User.hasMany(Purchase)
 
 //  Cart.belongsTo(Purchase)
 //  Purchase.hasOne(Cart)
