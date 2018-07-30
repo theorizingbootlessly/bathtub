@@ -31,7 +31,7 @@ class CheckoutForm extends Component {
     if (checkComplete === 'success') {
       return <h1>Purchase Complete</h1>
     } else if (checkComplete === 'error') {
-      return <h1>Purchase failed due to insufficient information</h1>
+      return <h1>Purchase failed. Please make sure all fields are filled in correctly.</h1>
     }
     return (
       <div className="checkout">

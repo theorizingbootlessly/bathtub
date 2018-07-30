@@ -16,7 +16,8 @@ class Checkout extends Component {
       email: '',
       address: '',
       cart: props.cart,
-      total: ''
+      total: '',
+      checkComplete: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -34,7 +35,6 @@ class Checkout extends Component {
   }
 
   async handleSubmit() {
-    console.log('this.props.cart is', this.props.cart)
     try {
       await axios.post('/api/purchase', {
         firstName: this.state.firstName,
@@ -44,10 +44,16 @@ class Checkout extends Component {
         cart: 'need to get cartId',
         userId: this.props.currentUser.id || null
       })
-      this.props.checkCompleteSuccess()
+      //this.props.checkCompleteSuccess()
+      this.setState({
+        checkComplete: 'success'
+      })
     } catch (error) {
       console.log(error)
-      this.props.checkCompleteError()
+      //this.props.checkCompleteError()
+      this.setState({
+        checkComplete: 'error'
+      })
     }
   }
 
@@ -121,7 +127,7 @@ class Checkout extends Component {
           <Elements>
             <CheckoutForm
               handleSubmit={this.handleSubmit}
-              checkComplete={this.props.checkComplete}
+              checkComplete={this.state.checkComplete}
               token={this.props.token}
               total={this.state.total}
             />
@@ -137,7 +143,7 @@ const mapStateToProps = state => {
     cart: state.cart,
     token: state.token,
     currentUser: state.user.currentUser,
-    checkComplete: state.checkComplete
+    //checkComplete: state.checkComplete
   }
 }
 
@@ -145,8 +151,8 @@ const mapDispatchToProps = dispatch => {
   return {
     loadCart: id => dispatch(renderCart(id)),
     makeToken: (id, total) => dispatch(createToken(id, total)),
-    checkCompleteSuccess: () => dispatch(toggleSuccess()),
-    checkCompleteError: () => dispatch(toggleError())
+    //checkCompleteSuccess: () => dispatch(toggleSuccess()),
+    //checkCompleteError: () => dispatch(toggleError())
   }
 }
 
