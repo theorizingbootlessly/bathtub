@@ -11,7 +11,7 @@ class CheckoutForm extends Component {
   }
 
   async handleSubmit(ev) {
-    let {token} = await this.props.stripe.createToken({name: 'Name'})
+    let {token} = await this.props.stripe.createToken(this.props.token)
     let response = await fetch('/users/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},

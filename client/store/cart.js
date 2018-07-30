@@ -7,6 +7,7 @@ const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
+
 //Dummy data
 // const defaultCart = [
 //   {
@@ -65,20 +66,14 @@ const updateItem = (id, quantity) => ({
 
 //Thunks
 
-export const renderCart = currentUser => async dispatch => {
-  const response = await axios.post(`/api/cart/${currentUser}`)
-  dispatch(getCart(response.data))
+export const renderCart = userId => async dispatch => {
+  try {
+    const response = await axios.post(`/api/cart/${userId}`)
+    dispatch(getCart(response.data))
+  } catch (err) {
+    console.log(err)
+  }
 }
-
-// export const fetchCart = userId => async dispatch => {
-//   try {
-//     const response = await axios.get(`/api/users/${userId}`)
-//     const cart = response.data
-//     dispatch(getCart(cart))
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
 
 export const deleteItemFromCart = id => dispatch => {
   try {
