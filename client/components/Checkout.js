@@ -25,6 +25,7 @@ class Checkout extends Component {
 
   componentDidMount() {
     this.props.loadCart(this.props.currentUser.id)
+
     let subtotal = 0
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
@@ -36,6 +37,7 @@ class Checkout extends Component {
       subtotal: subtotal,
       tax: (subtotal * 0.08).toFixed(2)
     })
+
     this.props.makeToken(this.props.currentUser.id, total)
   }
 
@@ -67,12 +69,6 @@ class Checkout extends Component {
   }
 
   render() {
-    // let subtotal = 0
-    // this.props.cart.forEach(item => {
-    //   subtotal += item.price * item.quantity
-    // })
-    // subtotal = Number(subtotal).toFixed(2)
-    // const tax = (subtotal * 0.08).toFixed(2)
     return (
       <div>
         Your cart so far:<br />
