@@ -69,9 +69,12 @@ export const users = () => async dispatch => {
 
 export const add_user = (user) => async dispatch => {
   try {
-    const newUser = await axios.post('/api/users', user)
-    const action = addUser(newUser)
-    dispatch(action)
+    const result = await axios.post('/api/users', user)
+    const newUser = result.data
+    const addUserAction = addUser(newUser)
+    const setUserAction = setCurrentUser(newUser)
+    dispatch(addUserAction)
+    dispatch(setUserAction)
   } catch (err){
     console.log(err)
   }
