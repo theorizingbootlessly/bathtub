@@ -77,6 +77,7 @@ router.put('/:userId/:productId/:quantity', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+})  
 router.delete('/guest/:item', (req, res, next) => {
   const itemTodelete = req.params.item
   delete req.session.cart[itemTodelete]

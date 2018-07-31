@@ -37,7 +37,6 @@ export const clearCart = deletedCart => ({
 //Thunks
 export const updateQuantity = updatedState => async dispatch => {
   try {
-    console.log('here in updating', updatedState)
     const {data} = await axios.put(
       `/api/cart/${updatedState.item.userId}/${updatedState.item.productId}/${
         updatedState.newQuantity

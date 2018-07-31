@@ -28,10 +28,6 @@ class Cart extends Component {
     this.loadAppropriateCart()
   }
 
-  componentDidUpdate() {
-    this.loadAppropriateCart()
-  }
-
   loadAppropriateCart() {
     if (this.props.user.currentUser.id) {
       this.props.loadCart(this.props.user.currentUser.id)
@@ -48,7 +44,6 @@ class Cart extends Component {
   }
   handleSubmit(event) {
     event.preventDefault()
-    console.log('handleSubmit')
     this.props.editCart(this.state)
   }
 
@@ -67,7 +62,6 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(this.props)
     const cartHasItems =
       this.props.cart === undefined || this.props.cart.length === 0 ? (
         'There are no items in your cart!'
