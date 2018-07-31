@@ -16,6 +16,10 @@ router.post('/:userId', async (req, res, next) => {
 })
 
 // route for updating quantity of cart item
+router.put('/guest/:item', (req, res, next) => {
+  req.session.cart[req.body.item.item.id] = req.body.item.newQuantity
+  res.status(200).send(req.session.cart)
+})
 
 router.put('/:userId/:productId', async (req, res, next) => {
   try {
@@ -78,6 +82,7 @@ router.put('/:userId/:productId/:quantity', async (req, res, next) => {
     next(error)
   }
 })  
+
 router.delete('/guest/:item', (req, res, next) => {
   const itemTodelete = req.params.item
   delete req.session.cart[itemTodelete]
@@ -103,6 +108,14 @@ router.delete('/:userId/:productId', async (req, res, next) => {
   }
 })
 
+router.delete('/guest', async (req, res, next) => {
+  try {
+    delete req.session.cart
+    res.status(204).send([])
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.post('/', (req, res, next) => {
   if (req.body.buyerId === 'sessionId') {
@@ -111,12 +124,10 @@ router.post('/', (req, res, next) => {
     addToCartUser(req, res, next)
   }
 })
-      
+
 router.get('/guest', (req, res, next) => {
   res.send(req.session.cart)
 })
-
-
 
 router.delete('/:userId', async (req, res, next) => {
   try {
