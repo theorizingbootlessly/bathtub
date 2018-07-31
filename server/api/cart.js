@@ -48,7 +48,7 @@ router.put('/:userId/:productId', async (req, res, next) => {
 
     res.json(findByUserId)
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 
@@ -92,6 +92,20 @@ router.get('/guest', (req, res, next) => {
 })
 
 
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    await cart.destroy()
+    res.status(204).send([])
+  } catch (err) {
+    next(err)
+  }
+})
 
 function addToCartSession(req, res, next) {
   //Check Session Cart
