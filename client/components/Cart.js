@@ -11,11 +11,21 @@ import {
 class Cart extends Component {
   constructor() {
     super()
+
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteOne = this.handleDeleteOne.bind(this)
+    this.loadAppropriateCart = this.loadAppropriateCart.bind(this)
   }
 
   componentDidMount() {
+    this.loadAppropriateCart()
+  }
+
+  componentDidUpdate(){
+    this.loadAppropriateCart()
+  }
+
+  loadAppropriateCart(){
     if (this.props.user.currentUser.id) {
       this.props.loadCart(this.props.user.currentUser.id)
     } else {
