@@ -64,8 +64,9 @@ const updateItem = (id, quantity) => ({
   quantity
 })
 
-export const clearCart = () => ({
-  type: CLEAR_CART
+export const clearCart = blank => ({
+  type: CLEAR_CART,
+  blank
 })
 
 //Thunks
@@ -103,9 +104,10 @@ export const updateItemInCart = (id, quantity) => dispatch => {
   }
 }
 
-export const emptyCart = () => dispatch => {
+export const emptyCart = userId => async dispatch => {
   try {
-    dispatch(clearCart())
+    await axios.delete(`/api/cart/${userId}`)
+    dispatch(clearCart([]))
   } catch (err) {
     console.log(err)
   }
@@ -141,7 +143,7 @@ const cartReducer = (state = [], action) => {
       }
       return state
     case CLEAR_CART:
-      return []
+      return action.blank
     default:
       return state
   }

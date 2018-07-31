@@ -25,13 +25,10 @@ class Checkout extends Component {
   }
 
   componentDidMount() {
-    console.log('this.props.user.currentUser.id', this.props.user.currentUser.id)
     this.props.loadCart(this.props.user.currentUser.id)
     let subtotal = 0
     this.props.cart.forEach(item => {
-      console.log('item is', item)
       subtotal += item.price * item.quantity
-      console.log('item.price is ' + item.price + ' and item.quantity is ' + item.quantity)
     })
     subtotal = Number(subtotal).toFixed(2)
     const total = (Number((subtotal * 0.08)) + Number(subtotal)).toFixed(2)

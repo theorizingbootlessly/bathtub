@@ -15,16 +15,26 @@ router.post('/:userId', async (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  
+
   if (req.body.buyerId === 'sessionId'){
     addToCartSession(req,res,next)
   } else {
     addToCartUser(req,res,next)
-  } 
+  }
+})
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findById(req.params.userId)
+    await cart.destroy()
+    res.status(204).send(cart)
+  } catch (err) {
+    next(err)
+  }
 })
 
  function addToCartSession(req, res, next){
-    //Check Session Cart 
+    //Check Session Cart
     const body = req.body
 
     if (!body.productId) {
@@ -36,11 +46,11 @@ router.post('/', (req, res, next) => {
           req.session.cart[body.productId] += Number(body.quantity)
         }
     } else {
-        let cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity} 
+        let cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity}
         req.session.cart = cart
       }
       res.sendStatus(201)
-      
+
   }
 
 async function addToCartUser (req, res, next){
