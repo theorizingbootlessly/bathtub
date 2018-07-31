@@ -46,3 +46,11 @@ h6 {
   margin-left: auto;
   width: 200px;
 }
+
+
+/* NavBar */
+#welcome{
+  position: absolute;
+  right: 10px;
+  font-size: 18px;
+}
