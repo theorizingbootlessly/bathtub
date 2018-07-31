@@ -52,6 +52,12 @@ router.put('/:userId/:productId', async (req, res, next) => {
   }
 })
 
+router.delete('/guest/:item', (req, res, next) => {
+  const itemTodelete = req.params.item
+  delete req.session.cart[itemTodelete]
+  res.send(req.session.cart)
+})
+
 router.delete('/:userId/:productId', async (req, res, next) => {
   try {
     const updatedCart = await Cart.findAll({
@@ -72,9 +78,6 @@ router.delete('/:userId/:productId', async (req, res, next) => {
   }
 })
 
-router.get('/guest', (req, res, next) => {
-  res.send(req.session.cart)
-})
 
 router.post('/', (req, res, next) => {
   if (req.body.buyerId === 'sessionId') {
@@ -83,6 +86,12 @@ router.post('/', (req, res, next) => {
     addToCartUser(req, res, next)
   }
 })
+      
+router.get('/guest', (req, res, next) => {
+  res.send(req.session.cart)
+})
+
+
 
 router.delete('/:userId', async (req, res, next) => {
   try {

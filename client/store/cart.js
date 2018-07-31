@@ -79,6 +79,32 @@ export const renderGuestCart = () => async dispatch => {
   }
 }
 
+export const deleteItemFromGuestCart = item => async dispatch => {
+  try{
+    
+    //Deletes item from session cart
+    const updatedCart = await axios.delete(`/api/cart/guest/${item.id}`)
+    console.log(updatedCart.data)
+    
+    let productIds = Object.keys(updatedCart.data)
+    let product
+    let products = []
+
+    //Gets products from product model based on revised session data
+    productIds.forEach((item) => {
+      product =  axios.get(`/api/product/${(item)}`)
+      products.push(product)
+     })
+    let productsArr = await Promise.all(products)
+    let final = productsArr.map(productstuff => {
+     return productstuff.data
+   })
+
+    dispatch(getCart(final))
+  } catch(err){
+      console.log(err)
+  }
+}
 export const deleteItemFromCart = item => async dispatch => {
   try {
     const {data} = await axios.delete(
