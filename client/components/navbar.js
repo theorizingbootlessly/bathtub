@@ -11,13 +11,12 @@ class Navbar extends Component {
     this.handleLogout = this.handleLogout.bind(this)
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     let result = await axios.get('/auth/me')
 
-    if (result.data.loggedIn){
+    if (result.data.loggedIn) {
       this.props.setCurrentUser(result.data.user)
     }
-
   }
 
   async handleLogout() {
@@ -38,9 +37,12 @@ class Navbar extends Component {
           <Link to="/login">Login</Link>
         )}
         <Link to="/cart">Cart</Link>
-        <Link to="/checkout">Checkout</Link>
         <Link to="/products">Products</Link>
-        {userIsLoggedIn ? <h3>Welcome, {this.props.currentUser.email}</h3> : <Link to="/signup">Sign-up</Link>}
+        {userIsLoggedIn ? (
+          <h3>Welcome, {this.props.currentUser.email}</h3>
+        ) : (
+          <Link to="/signup">Sign-up</Link>
+        )}
       </nav>
     )
   }
@@ -55,7 +57,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     logoutUser: () => dispatch(logout()),
-    setCurrentUser: (user) => dispatch(set_currentUser(user))
+    setCurrentUser: user => dispatch(set_currentUser(user))
   }
 }
 

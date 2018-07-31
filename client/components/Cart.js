@@ -121,7 +121,9 @@ class Cart extends Component {
       <div>
         {cartHasItems}
         <br />
-        <Link to="/checkout">Checkout</Link>
+        <Link to="/checkout">
+          <strong>Checkout</strong>
+        </Link>
       </div>
     )
   }
