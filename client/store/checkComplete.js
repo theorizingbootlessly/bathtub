@@ -1,30 +1,43 @@
-
 const initialState = {}
 
-const CHANGE_TO_SUCCESS = 'CHANGE_TO_SUCCESS'
-const CHANGE_TO_ERROR = 'CHANGE_TO_ERROR'
+const RENDER_SUCCESS = 'RENDER_SUCCESS'
+const RENDER_ERROR = 'RENDER_ERROR'
+const CLEAR = 'CLEAR'
 
-const makeSuccess = success => ({
-  type: CHANGE_TO_SUCCESS,
+const clearState = blank => ({
+  type: CLEAR,
+  blank
+})
+
+const getSuccess = success => ({
+  type: RENDER_SUCCESS,
   success
 })
 
-const makeError = error => ({
-  type: CHANGE_TO_ERROR,
+const getError = error => ({
+  type: RENDER_ERROR,
   error
 })
 
-export const toggleSuccess = () => dispatch => {
+export const fetchSuccess = () => dispatch => {
   try {
-    dispatch(makeSuccess('success'));
+    dispatch(getSuccess('success'))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const toggleError = () => dispatch => {
+export const fetchError = () => dispatch => {
   try {
-    dispatch(makeError('error'))
+    dispatch(getError('error'))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const clearCheckComplete = () => dispatch => {
+  try {
+    dispatch(clearState(''))
   } catch (err) {
     console.log(err)
   }
@@ -32,10 +45,12 @@ export const toggleError = () => dispatch => {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_TO_SUCCESS:
+    case RENDER_SUCCESS:
       return action.success
-    case CHANGE_TO_ERROR:
+    case RENDER_ERROR:
       return action.error
+    case CLEAR:
+      return action.blank
     default:
       return state
   }
