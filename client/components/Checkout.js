@@ -149,7 +149,6 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state)
   return {
     cart: state.cart.cartItems,
     token: state.token,
