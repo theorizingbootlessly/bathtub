@@ -55,7 +55,7 @@ class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
-      <React.Fragment>
+      <div className="login-form">
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -74,7 +74,7 @@ class LogIn extends Component {
           <button type="submit">Sign In</button>
         </form>
         <a href="/auth/google">login with Google</a>
-      </React.Fragment>
+      </div>
     )
   }
 }
