@@ -146,12 +146,26 @@ export const deleteOneDuck = item => async dispatch => {
 
 export const deleteCart = userId => async dispatch => {
   try {
-    const deletedCart = await axios.delete(`/api/cart/${userId}`)
+    if (userId === undefined) {
+      const deletedCart = await axios.delete('/api/cart/guest')
+    } else {
+      const deletedCart = await axios.delete(`/api/cart/${userId}`)
+    }
     dispatch(clearCart(deletedCart))
   } catch (err) {
     console.log(err)
   }
 }
+// export const deleteGuestCart = () => async dispatch => {
+//   try {
+//     console.log('made it to delete guest cart store TRY')
+//     const deletedCart = await axios.delete(`/api/cart/guest`)
+//     dispatch(clearCart(deletedCart))
+//   } catch (err) {
+//     console.log('made it to delete guest cart store CATCH ERR')
+//     console.log(err)
+//   }
+// }
 
 export const updateItemInCart = (id, quantity) => dispatch => {
   try {
@@ -179,7 +193,7 @@ const cartReducer = (state = {cartItems: []}, action) => {
     case DELETE_ONE_DUCK:
       return {...state, cartItems: action.items}
     case CLEAR_CART:
-      return action.deletedCart
+      return {...state, cartItems: action.deletedCart}
     default:
       return state
   }
