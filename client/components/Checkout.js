@@ -30,7 +30,7 @@ class Checkout extends Component {
       subtotal += item.price * item.quantity
     })
     subtotal = Number(subtotal).toFixed(2)
-    const total = (Number((subtotal * 0.08)) + Number(subtotal)).toFixed(2)
+    const total = (Number(subtotal * 0.08) + Number(subtotal)).toFixed(2)
     this.setState({
       total: total,
       subtotal: subtotal,
