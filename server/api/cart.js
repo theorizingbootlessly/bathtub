@@ -48,7 +48,7 @@ router.put('/:userId/:productId', async (req, res, next) => {
 
     res.json(findByUserId)
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 
@@ -77,6 +77,10 @@ router.put('/:userId/:productId/:quantity', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+router.delete('/guest/:item', (req, res, next) => {
+  const itemTodelete = req.params.item
+  delete req.session.cart[itemTodelete]
+  res.send(req.session.cart)
 })
 
 router.delete('/:userId/:productId', async (req, res, next) => {
@@ -98,15 +102,32 @@ router.delete('/:userId/:productId', async (req, res, next) => {
   }
 })
 
-router.get('/guest', (req, res, next) => {
-  res.send(req.session.cart)
-})
 
 router.post('/', (req, res, next) => {
   if (req.body.buyerId === 'sessionId') {
     addToCartSession(req, res, next)
   } else {
     addToCartUser(req, res, next)
+  }
+})
+      
+router.get('/guest', (req, res, next) => {
+  res.send(req.session.cart)
+})
+
+
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findOne({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    await cart.destroy()
+    res.status(204).send([])
+  } catch (err) {
+    next(err)
   }
 })
 

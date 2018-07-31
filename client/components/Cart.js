@@ -6,7 +6,8 @@ import {
   deleteItemFromCart,
   deleteOneDuck,
   renderGuestCart,
-  updateQuantity
+  updateQuantity,
+  deleteItemFromGuestCart
 } from '../store/cart'
 
 class Cart extends Component {
@@ -19,10 +20,19 @@ class Cart extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteOne = this.handleDeleteOne.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    ;(this.handleSubmit = this.handleSubmit.bind(this)),
+      (this.loadAppropriateCart = this.loadAppropriateCart.bind(this))
   }
 
   componentDidMount() {
+    this.loadAppropriateCart()
+  }
+
+  componentDidUpdate() {
+    this.loadAppropriateCart()
+  }
+
+  loadAppropriateCart() {
     if (this.props.user.currentUser.id) {
       this.props.loadCart(this.props.user.currentUser.id)
     } else {
@@ -44,7 +54,11 @@ class Cart extends Component {
 
   handleDelete(event, item) {
     event.preventDefault()
-    this.props.deleteItem(item)
+    if (this.props.user.currentUser.id) {
+      this.props.deleteItem(item)
+    } else {
+      this.props.deleteItemGuestCart(item)
+    }
   }
 
   handleDeleteOne(event, item) {
@@ -53,8 +67,9 @@ class Cart extends Component {
   }
 
   render() {
+    console.log(this.props)
     const cartHasItems =
-      this.props.cart.length === 0 ? (
+      this.props.cart === undefined || this.props.cart.length === 0 ? (
         'There are no items in your cart!'
       ) : (
         <div>
@@ -121,7 +136,8 @@ const mapDispatchToProps = dispatch => {
     loadCart: userId => dispatch(renderCart(userId)),
     loadGuestCart: () => dispatch(renderGuestCart()),
     deleteItem: item => dispatch(deleteItemFromCart(item)),
-    deleteOne: item => dispatch(deleteOneDuck(item))
+    deleteOne: item => dispatch(deleteOneDuck(item)),
+    deleteItemGuestCart: item => dispatch(deleteItemFromGuestCart(item))
   }
 }
 

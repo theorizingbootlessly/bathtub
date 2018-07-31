@@ -2,10 +2,10 @@ const initialState = {}
 
 const RENDER_SUCCESS = 'RENDER_SUCCESS'
 const RENDER_ERROR = 'RENDER_ERROR'
-const CLEAR = 'CLEAR'
+const CLEAR_CHECK_COMPLETE = 'CLEAR_CHECK_COMPLETE'
 
 const clearState = blank => ({
-  type: CLEAR,
+  type: CLEAR_CHECK_COMPLETE,
   blank
 })
 
@@ -49,7 +49,7 @@ export default function reducer(state = initialState, action) {
       return action.success
     case RENDER_ERROR:
       return action.error
-    case CLEAR:
+    case CLEAR_CHECK_COMPLETE:
       return action.blank
     default:
       return state
