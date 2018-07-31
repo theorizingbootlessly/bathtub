@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
-import {renderCart, emptyCart} from '../store/cart'
+import {renderCart, deleteCart} from '../store/cart'
 import {createToken} from '../store/token'
 import {createPurchase} from '../store/purchase'
 import {clearCheckComplete} from '../store/checkComplete'
@@ -64,11 +64,11 @@ class Checkout extends Component {
       lastName: '',
       email: '',
       address: '',
-      total: 0.00,
-      subtotal: 0.00,
-      tax: 0.00
+      total: 0.0,
+      subtotal: 0.0,
+      tax: 0.0
     })
-    this.props.emptyCart()
+    this.props.emptyCart(this.props.currentUser.id)
     this.props.history.push('/')
   }
 
@@ -166,7 +166,7 @@ const mapDispatchToProps = dispatch => {
     makeToken: (id, total) => dispatch(createToken(id, total)),
     makePurchase: purchase => dispatch(createPurchase(purchase)),
     clearCheckComplete: () => dispatch(clearCheckComplete()),
-    emptyCart: () => dispatch(emptyCart())
+    emptyCart: userId => dispatch(deleteCart(userId))
   }
 }
 

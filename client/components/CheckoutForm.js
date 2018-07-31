@@ -15,7 +15,7 @@ class CheckoutForm extends Component {
     let response = await fetch('/users/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
-      body: token.id
+      body: token.id || null
     })
 
     if (response.ok) {
@@ -38,7 +38,9 @@ class CheckoutForm extends Component {
     } else if (checkComplete === 'error') {
       return (
         <div>
-          {alert('Purchase failed. Please make sure all fields are filled in correctly.')}
+          {alert(
+            "Purchase failed. Please make sure all fields are filled in, and that they're filled in correctly."
+          )}
           {this.props.clearCheckComplete()}
         </div>
       )
