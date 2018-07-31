@@ -5,7 +5,8 @@ import {
   renderCart,
   deleteItemFromCart,
   deleteOneDuck,
-  renderGuestCart
+  renderGuestCart,
+  deleteItemFromGuestCart
 } from '../store/cart'
 
 class Cart extends Component {
@@ -25,7 +26,12 @@ class Cart extends Component {
 
   handleDelete(event, item) {
     event.preventDefault()
-    this.props.deleteItem(item)
+    if (this.props.user.currentUser.id) {
+      this.props.deleteItem(item)
+    } else {
+      this.props.deleteItemGuestCart(item)
+    }
+
   }
 
   handleDeleteOne(event, item) {
@@ -34,6 +40,7 @@ class Cart extends Component {
   }
 
   render() {
+    console.log(this.props)
     const cartHasItems =
       this.props.cart.length === 0 ? (
         'There are no items in your cart!'
@@ -87,7 +94,8 @@ const mapDispatchToProps = dispatch => {
     loadCart: userId => dispatch(renderCart(userId)),
     loadGuestCart: () => dispatch(renderGuestCart()),
     deleteItem: item => dispatch(deleteItemFromCart(item)),
-    deleteOne: item => dispatch(deleteOneDuck(item))
+    deleteOne: item => dispatch(deleteOneDuck(item)),
+    deleteItemGuestCart: item => dispatch(deleteItemFromGuestCart(item))
   }
 }
 

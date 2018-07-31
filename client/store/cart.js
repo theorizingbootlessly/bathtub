@@ -73,6 +73,16 @@ export const renderGuestCart = () => async dispatch => {
   }
 }
 
+export const deleteItemFromGuestCart = item => async dispatch => {
+  try{
+    console.log('HELLO')
+    const updatedCart = await axios.delete(`/api/cart/guest/${item.id}`)
+    console.log(updatedCart.data)
+    dispatch(deleteItem(item))
+  } catch(err){
+      console.log(err)
+  }
+}
 export const deleteItemFromCart = item => async dispatch => {
   try {
     const {data} = await axios.delete(
