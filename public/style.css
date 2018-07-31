@@ -19,3 +19,30 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+h6 {
+  font-size: 18px;
+}
+
+.landing-page-background {
+  background-color: skyblue;
+  color: grey;
+}
+
+.login-form {
+  background: #bbb0b0;
+  padding: 10vw 10vw;
+  margin: 10vw 10vw;
+}
+.center_div {
+  margin: 0 auto;
+  width: 80%; /* value of your choice which suits your alignment */
+}
+
+.landing-page-img {
+  display: block;
+  height: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+}

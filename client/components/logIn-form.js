@@ -55,26 +55,29 @@ class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
-      <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="email"
-            onChange={this.handleChange}
-            value={this.state.email}
-          />
-          <label>Email</label>
-          <input
-            type="password"
-            name="password"
-            onChange={this.handleChange}
-            value={this.state.password}
-          />
-          <label>Password</label>
-          <button type="submit">Sign In</button>
-        </form>
-        <a href="/auth/google">login with Google</a>
-      </React.Fragment>
+      <div class="container center_div">
+        <div className="login-form">
+          <form onSubmit={this.handleSubmit}>
+            <label>Email</label>
+            <input
+              type="text"
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
+            />
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={this.handleChange}
+              value={this.state.password}
+            />
+            <br />
+            <button type="submit">Sign In</button>
+          </form>
+          <a href="/auth/google">login with Google</a>
+        </div>
+      </div>
     )
   }
 }
