@@ -73,7 +73,6 @@ class Checkout extends Component {
   }
 
   render() {
-    console.log('this.props', this.props.user)
     return (
       <div>
         Your cart so far:<br />

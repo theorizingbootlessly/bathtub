@@ -29,18 +29,25 @@ export const deleteOne = items => ({
   items
 })
 
-export const updateItem = (id, quantity) => ({
-  type: UPDATE_ITEM_IN_CART,
-  id,
-  quantity
-})
-
 export const clearCart = deletedCart => ({
   type: CLEAR_CART,
   deletedCart
 })
 
 //Thunks
+export const updateQuantity = updatedState => async dispatch => {
+  try {
+    const {data} = await axios.put(
+      `/api/cart/${updatedState.item.userId}/${updatedState.item.productId}/${
+        updatedState.newQuantity
+      }`
+    )
+    dispatch(getCart(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const renderCart = userId => async dispatch => {
   try {
     const response = await axios.post(`/api/cart/${userId}`)
