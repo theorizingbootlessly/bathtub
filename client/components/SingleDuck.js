@@ -21,18 +21,17 @@ class SingleDuck extends Component {
   async handleSubmit(event) {
     event.preventDefault()
     try {
-      const buyerId = this.props.currentUser.email ? this.props.currentUser.id : 'sessionId'
-      await axios.post(
-        '/api/cart',
-        {
-          buyerId: buyerId,
-          productId: this.props.duck.id,
-          quantity: this.state.quantity,
-          imgURL: this.props.duck.imgURL,
-          name: this.props.duck.name,
-          price: this.props.duck.price
-        }
-      )
+      const buyerId = this.props.currentUser.email
+        ? this.props.currentUser.id
+        : 'sessionId'
+      await axios.post('/api/cart', {
+        buyerId: buyerId,
+        productId: this.props.duck.id,
+        quantity: this.state.quantity,
+        imgURL: this.props.duck.imgURL,
+        name: this.props.duck.name,
+        price: this.props.duck.price
+      })
     } catch (err) {
       console.log(err)
     }
@@ -46,9 +45,8 @@ class SingleDuck extends Component {
         <div>
           <img src={duck.imgURL} />
         </div>
-        <div>{duck.description}</div>
+        <div>description: {duck.description}</div>
         <div>${duck.price}</div>
-        <div>{duck.quantity} left!</div>
         <form>
           <button type="submit" onClick={this.handleSubmit}>
             Add to Cart
