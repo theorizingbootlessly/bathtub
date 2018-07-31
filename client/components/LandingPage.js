@@ -17,6 +17,7 @@ const LandingPage = () => (
           src="https://pbs.twimg.com/media/CJZoyq-UEAAuYHH.jpg"
           className="landing-page-img"
         />
+        HELLO
       </div>
     </div>
   </React.Fragment>
