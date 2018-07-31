@@ -105,7 +105,6 @@ router.delete('/:userId/:productId', async (req, res, next) => {
 
 router.delete('/guest', async (req, res, next) => {
   try {
-    console.log('req.session.cart is', req.session.cart)
     delete req.session.cart
     res.status(204).send([])
   } catch (err) {
