@@ -24,7 +24,7 @@ class Checkout extends Component {
   }
 
   componentDidMount() {
-    this.props.loadCart(this.props.user.currentUser.id)
+    this.props.loadCart(this.props.currentUser.id)
     let subtotal = 0
     this.props.cart.forEach(item => {
       subtotal += item.price * item.quantity
@@ -58,6 +58,7 @@ class Checkout extends Component {
   }
 
   render() {
+    console.log('this.props', this.props.user)
     return (
       <div>
         Your cart so far:<br />
@@ -133,8 +134,9 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('state', state)
   return {
-    cart: state.cart,
+    cart: state.cart.cartItems,
     token: state.token,
     currentUser: state.user.currentUser,
     checkComplete: state.checkComplete
