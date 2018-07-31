@@ -44,7 +44,7 @@ class SingleDuck extends Component {
     this.setState({addedToCart: true})
     setTimeout(() => {
       this.setState({addedToCart: false})
-    }, 2000)
+    }, 1000)
   }
 
   render() {
