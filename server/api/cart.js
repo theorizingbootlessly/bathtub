@@ -52,6 +52,33 @@ router.put('/:userId/:productId', async (req, res, next) => {
   }
 })
 
+// route for updating quantity
+
+router.put('/:userId/:productId/:quantity', async (req, res, next) => {
+  try {
+    const updateQuantity = await Cart.update(
+      {
+        quantity: req.params.quantity
+      },
+      {
+        where: {
+          userId: req.params.userId,
+          productId: req.params.productId
+        }
+      }
+    )
+    const findByUserId = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    console.log(findByUserId)
+    res.json(findByUserId)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:userId/:productId', async (req, res, next) => {
   try {
     const updatedCart = await Cart.findAll({
@@ -65,7 +92,6 @@ router.delete('/:userId/:productId', async (req, res, next) => {
         productId: req.params.productId
       }
     })
-    console.log(' updated cart', updatedCart)
     res.send(updatedCart)
   } catch (error) {
     next(error)

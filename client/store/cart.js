@@ -27,14 +27,26 @@ export const deleteOne = items => ({
   type: DELETE_ONE_DUCK,
   items
 })
-
-const updateItem = (id, quantity) => ({
+export const editQuantity = newQuantity => ({
   type: UPDATE_ITEM_IN_CART,
-  id,
-  quantity
+  newQuantity
 })
 
 //Thunks
+export const updateQuantity = updatedState => async dispatch => {
+  try {
+    console.log('here in updating', updatedState)
+    const {data} = await axios.put(
+      `/api/cart/${updatedState.item.userId}/${updatedState.item.productId}/${
+        updatedState.newQuantity
+      }`
+    )
+    dispatch(getCart(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const renderCart = userId => async dispatch => {
   try {
     const response = await axios.post(`/api/cart/${userId}`)
@@ -45,7 +57,7 @@ export const renderCart = userId => async dispatch => {
 }
 
 export const renderGuestCart = () => async dispatch => {
-  try{
+  try {
     //Grabs product and quantity from session data
     const productIdAndQuant = await axios.get('/api/cart/guest')
     let productIds = Object.keys(productIdAndQuant.data)
@@ -53,17 +65,17 @@ export const renderGuestCart = () => async dispatch => {
     let products = []
 
     //Gets products from product model based on session data
-    productIds.forEach((item) => {
-       product =  axios.get(`/api/product/${(item)}`)
-       products.push(product)
-      })
+    productIds.forEach(item => {
+      product = axios.get(`/api/product/${item}`)
+      products.push(product)
+    })
     let productsArr = await Promise.all(products)
     let final = productsArr.map(productstuff => {
       return productstuff.data
     })
 
     //Matches up quantity correctly
-    final.forEach((duck) => {
+    final.forEach(duck => {
       duck.quantity = productIdAndQuant.data[duck.id]
     })
 

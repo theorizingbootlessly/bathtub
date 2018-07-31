@@ -5,14 +5,21 @@ import {
   renderCart,
   deleteItemFromCart,
   deleteOneDuck,
-  renderGuestCart
+  renderGuestCart,
+  updateQuantity
 } from '../store/cart'
 
 class Cart extends Component {
   constructor() {
     super()
+    this.state = {
+      newQuantity: '',
+      item: {}
+    }
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteOne = this.handleDeleteOne.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -21,6 +28,18 @@ class Cart extends Component {
     } else {
       this.props.loadGuestCart()
     }
+  }
+
+  handleChange(event, item) {
+    this.setState({
+      newQuantity: event.target.value,
+      item
+    })
+  }
+  handleSubmit(event) {
+    event.preventDefault()
+    console.log('handleSubmit')
+    this.props.editCart(this.state)
   }
 
   handleDelete(event, item) {
@@ -50,6 +69,20 @@ class Cart extends Component {
               ${item.price}
               <br />
               Quantity: {item.quantity}
+              <br />
+              <form onSubmit={this.handleSubmit}>
+                Change Quantity to:
+                <input
+                  name="editQuantity"
+                  type="text"
+                  value={this.state.newQuantity}
+                  onChange={event => {
+                    this.handleChange(event, item)
+                  }}
+                  required
+                />
+                <button>Submit Change</button>
+              </form>
               <br />
               <Link to="/cart" onClick={() => this.handleDelete(event, item)}>
                 [Remove these kinds of ducks]
@@ -84,6 +117,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    editCart: updatedState => dispatch(updateQuantity(updatedState)),
     loadCart: userId => dispatch(renderCart(userId)),
     loadGuestCart: () => dispatch(renderGuestCart()),
     deleteItem: item => dispatch(deleteItemFromCart(item)),
