@@ -9,7 +9,6 @@ const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 const CLEAR_CART = 'CLEAR_CART'
 
 //Action creators
-
 const getCart = cart => {
   return {
     type: GET_CART,
