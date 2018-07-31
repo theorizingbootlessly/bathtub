@@ -14,11 +14,10 @@ class Navbar extends Component {
   async componentDidMount(){
     let result = await axios.get('/auth/me')
 
-    let user = result.data
+    if (result.data.loggedIn){
+      this.props.setCurrentUser(result.data.user)
+    }
 
-    this.props.setCurrentUser(user)
-
-    console.log('user', user)
   }
 
   async handleLogout() {
@@ -41,7 +40,7 @@ class Navbar extends Component {
         <Link to="/cart">Cart</Link>
         <Link to="/checkout">Checkout</Link>
         <Link to="/products">Products</Link>
-        {userIsLoggedIn ? null : <Link to="/signup">Sign-up</Link>}
+        {userIsLoggedIn ? <h3>Welcome, {this.props.currentUser.email}</h3> : <Link to="/signup">Sign-up</Link>}
       </nav>
     )
   }

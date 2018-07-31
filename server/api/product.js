@@ -12,3 +12,16 @@ router.get('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.get('/:item', async (req, res, next) => {
+  try{
+    const product = await Product.findOne({
+      where:{
+        id: req.params.item
+      }
+    })
+    res.status(200).send(product)
+  } catch(err) {
+    next(err)
+  }
+})

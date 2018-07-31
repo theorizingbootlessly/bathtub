@@ -14,8 +14,11 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
+router.get('/guest', (req, res, next) => {
+  res.send(req.session.cart)
+})
 
+router.post('/', (req, res, next) => {
   if (req.body.buyerId === 'sessionId'){
     addToCartSession(req,res,next)
   } else {
@@ -36,7 +39,7 @@ router.delete('/:userId', async (req, res, next) => {
  function addToCartSession(req, res, next){
     //Check Session Cart
     const body = req.body
-
+    let cart;
     if (!body.productId) {
       res.sendStatus(404)
     } else if (req.session.cart) {
@@ -46,11 +49,19 @@ router.delete('/:userId', async (req, res, next) => {
           req.session.cart[body.productId] += Number(body.quantity)
         }
     } else {
+<<<<<<< HEAD
         let cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity}
         req.session.cart = cart
       }
       res.sendStatus(201)
 
+=======
+       cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity}
+        req.session.cart = cart
+      }
+      res.status(201).send(cart)
+
+>>>>>>> master
   }
 
 async function addToCartUser (req, res, next){
