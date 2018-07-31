@@ -33,6 +33,7 @@ class CheckoutForm extends Component {
         <div>
           {alert('Purchase complete!')}
           {this.props.clearCheckComplete()}
+          {this.props.emptyCartAndClearFields()}
         </div>
       )
     } else if (checkComplete === 'error') {

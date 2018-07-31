@@ -6,7 +6,7 @@ const GET_CART = 'GET_CART'
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
-
+const CLEAR_CART = 'CLEAR_CART'
 
 //Dummy data
 // const defaultCart = [
@@ -64,6 +64,10 @@ const updateItem = (id, quantity) => ({
   quantity
 })
 
+export const clearCart = () => ({
+  type: CLEAR_CART
+})
+
 //Thunks
 
 export const renderCart = userId => async dispatch => {
@@ -99,6 +103,14 @@ export const updateItemInCart = (id, quantity) => dispatch => {
   }
 }
 
+export const emptyCart = () => dispatch => {
+  try {
+    dispatch(clearCart())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 //Reducer
 const cartReducer = (state = [], action) => {
   switch (action.type) {
@@ -128,6 +140,8 @@ const cartReducer = (state = [], action) => {
         }
       }
       return state
+    case CLEAR_CART:
+      return []
     default:
       return state
   }

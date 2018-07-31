@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
-import {renderCart} from '../store/cart'
+import {renderCart, emptyCart} from '../store/cart'
 import {createToken} from '../store/token'
 import {createPurchase} from '../store/purchase'
 import {clearCheckComplete} from '../store/checkComplete'
@@ -21,6 +21,7 @@ class Checkout extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.emptyCartAndClearFields = this.emptyCartAndClearFields.bind(this)
   }
 
   componentDidMount() {
@@ -58,6 +59,19 @@ class Checkout extends Component {
       userId: this.props.currentUser.id || null
     }
     this.props.makePurchase(newPurchase)
+  }
+
+  emptyCartAndClearFields() {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      total: 0.00,
+      subtotal: 0.00,
+      tax: 0.00
+    })
+    this.props.emptyCart()
   }
 
   render() {
@@ -127,6 +141,7 @@ class Checkout extends Component {
               token={this.props.token}
               total={this.state.total}
               clearCheckComplete={this.props.clearCheckComplete}
+              emptyCartAndClearFields={this.emptyCartAndClearFields}
             />
           </Elements>
         </StripeProvider>
@@ -150,7 +165,8 @@ const mapDispatchToProps = dispatch => {
     loadCart: id => dispatch(renderCart(id)),
     makeToken: (id, total) => dispatch(createToken(id, total)),
     makePurchase: purchase => dispatch(createPurchase(purchase)),
-    clearCheckComplete: () => dispatch(clearCheckComplete())
+    clearCheckComplete: () => dispatch(clearCheckComplete()),
+    emptyCart: () => dispatch(emptyCart())
   }
 }
 
