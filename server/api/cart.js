@@ -78,6 +78,14 @@ router.delete('/:userId/:productId', async (req, res, next) => {
   }
 })
 
+router.delete('/guest', async (req, res, next) => {
+  try {
+    delete req.session.cart
+    res.status(204).send([])
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.post('/', (req, res, next) => {
   if (req.body.buyerId === 'sessionId') {
@@ -86,12 +94,10 @@ router.post('/', (req, res, next) => {
     addToCartUser(req, res, next)
   }
 })
-      
+
 router.get('/guest', (req, res, next) => {
   res.send(req.session.cart)
 })
-
-
 
 router.delete('/:userId', async (req, res, next) => {
   try {
