@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {renderCart, deleteItemFromCart, deleteOneDuck} from '../store/cart'
-import axios from 'axios'
+import {renderCart, deleteItemFromCart, deleteOneDuck, renderGuestCart} from '../store/cart'
 
 class Cart extends Component {
   constructor() {
@@ -12,7 +11,11 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.loadCart(this.props.user.currentUser.id)
+    if (this.props.user.currentUser.id){
+      this.props.loadCart(this.props.user.currentUser.id)
+    } else {
+      this.props.loadGuestCart()
+    }
   }
 
   handleDelete(event, id) {
@@ -26,7 +29,7 @@ class Cart extends Component {
   }
 
   render() {
-    const renderCart = !this.props.cart.length ? (
+    const cartHasItems = this.props.cart.length===0 ? (
       'There are no items in your cart!'
     ) : (
       <div>
@@ -58,7 +61,7 @@ class Cart extends Component {
     )
     return (
       <div>
-        {renderCart}
+        {cartHasItems}
         <br />
         <Link to="/checkout">Checkout</Link>
       </div>
@@ -67,7 +70,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state.cart)
+  console.log(state.cart)
   return {
     cart: state.cart,
     user: state.user
@@ -76,7 +79,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCart: userId => dispatch(renderCart(userId)),
+    loadCart: userId =>  dispatch(renderCart(userId)), 
+    loadGuestCart: () => dispatch(renderGuestCart()),
     deleteItem: id => dispatch(deleteItemFromCart(id)),
     deleteOne: id => dispatch(deleteOneDuck(id))
   }
