@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
-import {renderCart} from '../store/cart'
+import {renderCart, deleteCart} from '../store/cart'
 import {createToken} from '../store/token'
 import {createPurchase} from '../store/purchase'
 import {clearCheckComplete} from '../store/checkComplete'
@@ -21,6 +21,7 @@ class Checkout extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.emptyCartAndClearFields = this.emptyCartAndClearFields.bind(this)
   }
 
   componentDidMount() {
@@ -55,6 +56,20 @@ class Checkout extends Component {
       userId: this.props.currentUser.id || null
     }
     this.props.makePurchase(newPurchase)
+  }
+
+  emptyCartAndClearFields() {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      total: 0.0,
+      subtotal: 0.0,
+      tax: 0.0
+    })
+    this.props.emptyCart(this.props.currentUser.id)
+    this.props.history.push('/')
   }
 
   render() {
@@ -125,6 +140,7 @@ class Checkout extends Component {
               token={this.props.token}
               total={this.state.total}
               clearCheckComplete={this.props.clearCheckComplete}
+              emptyCartAndClearFields={this.emptyCartAndClearFields}
             />
           </Elements>
         </StripeProvider>
@@ -139,7 +155,8 @@ const mapStateToProps = state => {
     cart: state.cart.cartItems,
     token: state.token,
     currentUser: state.user.currentUser,
-    checkComplete: state.checkComplete
+    checkComplete: state.checkComplete,
+    user: state.user
   }
 }
 
@@ -148,7 +165,8 @@ const mapDispatchToProps = dispatch => {
     loadCart: id => dispatch(renderCart(id)),
     makeToken: (id, total) => dispatch(createToken(id, total)),
     makePurchase: purchase => dispatch(createPurchase(purchase)),
-    clearCheckComplete: () => dispatch(clearCheckComplete())
+    clearCheckComplete: () => dispatch(clearCheckComplete()),
+    emptyCart: userId => dispatch(deleteCart(userId))
   }
 }
 

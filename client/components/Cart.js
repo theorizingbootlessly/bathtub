@@ -35,7 +35,7 @@ class Cart extends Component {
 
   render() {
     const cartHasItems =
-      this.props.cart.length === 0 ? (
+      this.props.cart === undefined || this.props.cart.length === 0 ? (
         'There are no items in your cart!'
       ) : (
         <div>
