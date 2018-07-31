@@ -72,6 +72,7 @@ class Checkout extends Component {
       tax: 0.00
     })
     this.props.emptyCart()
+    this.props.history.push('/')
   }
 
   render() {
