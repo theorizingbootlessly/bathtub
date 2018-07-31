@@ -83,6 +83,7 @@ router.put('/:userId/:productId/:quantity', async (req, res, next) => {
   }
 })  
 
+
 router.delete('/guest/:item', (req, res, next) => {
   const itemTodelete = req.params.item
   delete req.session.cart[itemTodelete]
@@ -131,12 +132,11 @@ router.get('/guest', (req, res, next) => {
 
 router.delete('/:userId', async (req, res, next) => {
   try {
-    const cart = await Cart.findOne({
+    await Cart.destroy({
       where: {
         userId: req.params.userId
       }
     })
-    await cart.destroy()
     res.status(204).send([])
   } catch (err) {
     next(err)
