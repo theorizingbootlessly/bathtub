@@ -42,7 +42,6 @@ User.prototype.addToCart = async function(product) {
     cart: this.cart.push(product)
   })
    console.log(this.cart.length, this.cart)
-
 }
 
 /**
