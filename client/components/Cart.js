@@ -21,8 +21,8 @@ class Cart extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteOne = this.handleDeleteOne.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    ;(this.handleSubmit = this.handleSubmit.bind(this)),
-      (this.loadAppropriateCart = this.loadAppropriateCart.bind(this))
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.loadAppropriateCart = this.loadAppropriateCart.bind(this)
   }
 
   componentDidMount() {
@@ -121,7 +121,9 @@ class Cart extends Component {
       <div>
         {cartHasItems}
         <br />
-        <Link to="/checkout">Checkout</Link>
+        <Link to="/checkout">
+          <strong>Checkout</strong>
+        </Link>
       </div>
     )
   }
