@@ -10,7 +10,6 @@ const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 //Action creators
 
 const getCart = cart => {
-  console.log(cart, 'cart')
   return {
     type: GET_CART,
     cart
@@ -46,20 +45,26 @@ export const renderCart = userId => async dispatch => {
 }
 
 export const renderGuestCart = () => async dispatch => {
-  try {
+  try{
+    //Grabs product and quantity from session data
     const productIdAndQuant = await axios.get('/api/cart/guest')
     let productIds = Object.keys(productIdAndQuant.data)
     let product
     let products = []
 
-    productIds.forEach(item => {
-      product = axios.get(`/api/product/${item}`)
-      products.push(product)
-    })
-
+    //Gets products from product model based on session data
+    productIds.forEach((item) => {
+       product =  axios.get(`/api/product/${(item)}`)
+       products.push(product)
+      })
     let productsArr = await Promise.all(products)
     let final = productsArr.map(productstuff => {
       return productstuff.data
+    })
+
+    //Matches up quantity correctly
+    final.forEach((duck) => {
+      duck.quantity = productIdAndQuant.data[duck.id]
     })
 
     dispatch(getCart(final))
