@@ -6,6 +6,7 @@ const GET_CART = 'GET_CART'
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
+const CLEAR_CART = 'CLEAR_CART'
 
 //Action creators
 
@@ -28,10 +29,15 @@ export const deleteOne = items => ({
   items
 })
 
-const updateItem = (id, quantity) => ({
+export const updateItem = (id, quantity) => ({
   type: UPDATE_ITEM_IN_CART,
   id,
   quantity
+})
+
+export const clearCart = deletedCart => ({
+  type: CLEAR_CART,
+  deletedCart
 })
 
 //Thunks
@@ -45,7 +51,7 @@ export const renderCart = userId => async dispatch => {
 }
 
 export const renderGuestCart = () => async dispatch => {
-  try{
+  try {
     //Grabs product and quantity from session data
     const productIdAndQuant = await axios.get('/api/cart/guest')
     let productIds = Object.keys(productIdAndQuant.data)
@@ -53,17 +59,17 @@ export const renderGuestCart = () => async dispatch => {
     let products = []
 
     //Gets products from product model based on session data
-    productIds.forEach((item) => {
-       product =  axios.get(`/api/product/${(item)}`)
-       products.push(product)
-      })
+    productIds.forEach(item => {
+      product = axios.get(`/api/product/${item}`)
+      products.push(product)
+    })
     let productsArr = await Promise.all(products)
     let final = productsArr.map(productstuff => {
       return productstuff.data
     })
 
     //Matches up quantity correctly
-    final.forEach((duck) => {
+    final.forEach(duck => {
       duck.quantity = productIdAndQuant.data[duck.id]
     })
 
@@ -73,6 +79,32 @@ export const renderGuestCart = () => async dispatch => {
   }
 }
 
+export const deleteItemFromGuestCart = item => async dispatch => {
+  try{
+    
+    //Deletes item from session cart
+    const updatedCart = await axios.delete(`/api/cart/guest/${item.id}`)
+    console.log(updatedCart.data)
+    
+    let productIds = Object.keys(updatedCart.data)
+    let product
+    let products = []
+
+    //Gets products from product model based on revised session data
+    productIds.forEach((item) => {
+      product =  axios.get(`/api/product/${(item)}`)
+      products.push(product)
+     })
+    let productsArr = await Promise.all(products)
+    let final = productsArr.map(productstuff => {
+     return productstuff.data
+   })
+
+    dispatch(getCart(final))
+  } catch(err){
+      console.log(err)
+  }
+}
 export const deleteItemFromCart = item => async dispatch => {
   try {
     const {data} = await axios.delete(
@@ -106,6 +138,15 @@ export const deleteOneDuck = item => async dispatch => {
   }
 }
 
+export const deleteCart = userId => async dispatch => {
+  try {
+    const deletedCart = await axios.delete(`/api/cart/${userId}`)
+    dispatch(clearCart(deletedCart))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const updateItemInCart = (id, quantity) => dispatch => {
   try {
     dispatch(updateItem(id, quantity))
@@ -131,6 +172,8 @@ const cartReducer = (state = {cartItems: []}, action) => {
       return state
     case DELETE_ONE_DUCK:
       return {...state, cartItems: action.items}
+    case CLEAR_CART:
+      return action.deletedCart
     default:
       return state
   }
