@@ -28,6 +28,11 @@ router.put('/:userId/:productId', async (req, res, next) => {
         }
       })
     }
+    const findByUserId = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
 
     await Cart.update(
       {
@@ -41,15 +46,29 @@ router.put('/:userId/:productId', async (req, res, next) => {
       }
     )
 
-    const findByUserId = await Cart.findAll({
+    res.json(findByUserId)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.delete('/:userId/:productId', async (req, res, next) => {
+  try {
+    const updatedCart = await Cart.findAll({
       where: {
         userId: req.params.userId
       }
     })
-    console.log(findByUserId)
-    res.json(findByUserId)
+    const destroyItem = await Cart.destroy({
+      where: {
+        userId: req.params.userId,
+        productId: req.params.productId
+      }
+    })
+    console.log(' updated cart', updatedCart)
+    res.send(updatedCart)
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 

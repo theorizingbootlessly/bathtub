@@ -15,9 +15,9 @@ const getCart = cart => ({
 })
 
 // deletes section
-export const deleteItem = id => ({
+export const deleteItem = item => ({
   type: DELETE_ITEM_FROM_CART,
-  id
+  item
 })
 
 // subtracts 1 from quantity in cart for a kind of duck
@@ -39,31 +39,35 @@ export const renderCart = currentUser => async dispatch => {
   dispatch(getCart(response.data))
 }
 
-// export const fetchCart = userId => async dispatch => {
-//   try {
-//     const response = await axios.get(`/api/users/${userId}`)
-//     const cart = response.data
-//     dispatch(getCart(cart))
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
-
-export const deleteItemFromCart = id => dispatch => {
+export const deleteItemFromCart = item => async dispatch => {
   try {
-    dispatch(deleteItem(id))
+    const {data} = await axios.delete(
+      `/api/cart/${item.userId}/${item.productId}`
+    )
+    const deletedData = data.filter(
+      updatedCartItem => item.name !== updatedCartItem.name
+    )
+    dispatch(deleteItem(deletedData))
   } catch (err) {
     console.log(err)
   }
+  cons
 }
 
 export const deleteOneDuck = item => async dispatch => {
   try {
-    const updateCartById = await axios.put(
+    const {data} = await axios.put(
       `/api/cart/${item.userId}/${item.productId}`,
       item
     )
-    dispatch(deleteOne(updateCartById.data))
+    const updateQuantity = []
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name === item.name) {
+        data[i].quantity--
+      }
+      updateQuantity.push(data[i])
+    }
+    dispatch(deleteOne(updateQuantity))
   } catch (err) {
     console.log(err)
   }
@@ -78,18 +82,12 @@ export const updateItemInCart = (id, quantity) => dispatch => {
 }
 
 //Reducer
-const cartReducer = (state = [], action) => {
+const cartReducer = (state = {cartItems: []}, action) => {
   switch (action.type) {
     case GET_CART:
-      return action.cart
+      return {...state, cartItems: action.cart}
     case DELETE_ITEM_FROM_CART:
-      for (let i = 0; i < state.length; i++) {
-        if (state[i].id === action.id) {
-          state.splice(i, 1)
-          break
-        }
-      }
-      return state
+      return {...state, cartItems: action.item}
     case UPDATE_ITEM_IN_CART:
       for (let i = 0; i < state.length; i++) {
         if (state.id === action.id) {
@@ -99,14 +97,7 @@ const cartReducer = (state = [], action) => {
       }
       return state
     case DELETE_ONE_DUCK:
-      // for (let i = 0; i < state.length; i++) {
-      //   console.log('state', state[i])
-      //   console.log('state', action.items[i])
-      //   if (state[i].quantity !== action.items[i].quantity) {
-      //     console.log('need to change')
-      //   }
-      // }
-      return action.items
+      return {...state, cartItems: action.items}
     default:
       return state
   }
