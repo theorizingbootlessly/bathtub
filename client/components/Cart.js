@@ -7,7 +7,8 @@ import {
   deleteOneDuck,
   renderGuestCart,
   updateQuantity,
-  deleteItemFromGuestCart
+  deleteItemFromGuestCart,
+  updateGuestCart
 } from '../store/cart'
 
 class Cart extends Component {
@@ -42,9 +43,18 @@ class Cart extends Component {
       item
     })
   }
+
   handleSubmit(event) {
     event.preventDefault()
-    this.props.editCart(this.state)
+    if (this.props.user.currentUser.id) {
+      this.props.editCart(this.state)
+    } else {
+      this.props.editGuestCart(this.state)
+    }
+
+    this.setState({
+      newQuantity: ''
+    })
   }
 
   handleDelete(event, item) {
@@ -83,7 +93,7 @@ class Cart extends Component {
                 Change Quantity to:
                 <input
                   name="editQuantity"
-                  type="text"
+                  type="number"
                   value={this.state.newQuantity}
                   onChange={event => {
                     this.handleChange(event, item)
@@ -127,6 +137,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     editCart: updatedState => dispatch(updateQuantity(updatedState)),
+    editGuestCart: updatedState => dispatch(updateGuestCart(updatedState)),
     loadCart: userId => dispatch(renderCart(userId)),
     loadGuestCart: () => dispatch(renderGuestCart()),
     deleteItem: item => dispatch(deleteItemFromCart(item)),
