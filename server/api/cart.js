@@ -1,16 +1,74 @@
 const router = require('express').Router()
 const {Cart} = require('../db/models')
 
+// route for rendering Cart items
 router.post('/:userId', async (req, res, next) => {
   try {
     const userCart = await Cart.findAll({
       where: {
         userId: req.params.userId
-      } // eager load option: ?
+      }
     })
     res.send(userCart)
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log('error in render cart route')
+  }
+})
+
+// route for updating quantity of cart item
+
+router.put('/:userId/:productId', async (req, res, next) => {
+  try {
+    if (req.body.quantity === 1) {
+      await Cart.destroy({
+        where: {
+          userId: req.params.userId,
+          productId: req.params.productId,
+          quantity: 1
+        }
+      })
+    }
+    const findByUserId = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+
+    await Cart.update(
+      {
+        quantity: req.body.quantity - 1
+      },
+      {
+        where: {
+          userId: req.params.userId,
+          productId: req.params.productId
+        }
+      }
+    )
+
+    res.json(findByUserId)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.delete('/:userId/:productId', async (req, res, next) => {
+  try {
+    const updatedCart = await Cart.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const destroyItem = await Cart.destroy({
+      where: {
+        userId: req.params.userId,
+        productId: req.params.productId
+      }
+    })
+    console.log(' updated cart', updatedCart)
+    res.send(updatedCart)
+  } catch (error) {
+    next(error)
   }
 })
 

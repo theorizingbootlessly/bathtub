@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { Login } from './auth-form';
+import {Login} from './auth-form'
 import {set_currentUser} from '../store'
 
 class LogIn extends Component {
@@ -40,10 +40,11 @@ class LogIn extends Component {
         })
       }
     } catch (err) {
-
-      alert('Sorry, cannot find user. Please make sure your email and password are typed in correctly')
+      alert(
+        'Sorry, cannot find user. Please make sure your email and password are typed in correctly'
+      )
       this.setState({
-        password: '',
+        password: ''
       })
       console.log(err)
     }
@@ -51,7 +52,7 @@ class LogIn extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/" />
+      return <Redirect to="/welcome" />
     }
     return (
       <React.Fragment>
@@ -78,9 +79,9 @@ class LogIn extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: (currentUser) => dispatch(set_currentUser(currentUser))
+    setCurrentUser: currentUser => dispatch(set_currentUser(currentUser))
   }
 }
 

@@ -6,12 +6,10 @@ const GET_CART = 'GET_CART'
 const DELETE_ITEM_FROM_CART = 'DELETE_ITEM_FROM_CART'
 const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
-const CLEAR_CART = 'CLEAR_CART'
 
 //Action creators
 
 const getCart = cart => {
-  console.log(cart, 'cart')
   return {
     type: GET_CART,
     cart
@@ -19,15 +17,15 @@ const getCart = cart => {
 }
 
 // deletes section
-export const deleteItem = id => ({
+export const deleteItem = item => ({
   type: DELETE_ITEM_FROM_CART,
-  id
+  item
 })
 
 // subtracts 1 from quantity in cart for a kind of duck
-export const deleteOne = id => ({
+export const deleteOne = items => ({
   type: DELETE_ONE_DUCK,
-  id
+  items
 })
 
 const updateItem = (id, quantity) => ({
@@ -53,19 +51,25 @@ export const renderCart = userId => async dispatch => {
 
 export const renderGuestCart = () => async dispatch => {
   try {
+    //Grabs product and quantity from session data
     const productIdAndQuant = await axios.get('/api/cart/guest')
     let productIds = Object.keys(productIdAndQuant.data)
     let product
     let products = []
 
+    //Gets products from product model based on session data
     productIds.forEach(item => {
       product = axios.get(`/api/product/${item}`)
       products.push(product)
     })
-
     let productsArr = await Promise.all(products)
     let final = productsArr.map(productstuff => {
       return productstuff.data
+    })
+
+    //Matches up quantity correctly
+    final.forEach(duck => {
+      duck.quantity = productIdAndQuant.data[duck.id]
     })
 
     dispatch(getCart(final))
@@ -74,17 +78,34 @@ export const renderGuestCart = () => async dispatch => {
   }
 }
 
-export const deleteItemFromCart = id => dispatch => {
+export const deleteItemFromCart = item => async dispatch => {
   try {
-    dispatch(deleteItem(id))
+    const {data} = await axios.delete(
+      `/api/cart/${item.userId}/${item.productId}`
+    )
+    const deletedData = data.filter(
+      updatedCartItem => item.name !== updatedCartItem.name
+    )
+    dispatch(deleteItem(deletedData))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const deleteOneDuck = id => dispatch => {
+export const deleteOneDuck = item => async dispatch => {
   try {
-    dispatch(deleteOne(id))
+    const {data} = await axios.put(
+      `/api/cart/${item.userId}/${item.productId}`,
+      item
+    )
+    const updateQuantity = []
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name === item.name) {
+        data[i].quantity--
+      }
+      updateQuantity.push(data[i])
+    }
+    dispatch(deleteOne(updateQuantity))
   } catch (err) {
     console.log(err)
   }
@@ -98,28 +119,13 @@ export const updateItemInCart = (id, quantity) => dispatch => {
   }
 }
 
-export const emptyCart = userId => async dispatch => {
-  try {
-    await axios.delete(`/api/cart/${userId}`)
-    dispatch(clearCart([]))
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 //Reducer
-const cartReducer = (state = [], action) => {
+const cartReducer = (state = {cartItems: []}, action) => {
   switch (action.type) {
     case GET_CART:
-      return action.cart
+      return {...state, cartItems: action.cart}
     case DELETE_ITEM_FROM_CART:
-      for (let i = 0; i < state.length; i++) {
-        if (state[i].id === action.id) {
-          state.splice(i, 1)
-          break
-        }
-      }
-      return state
+      return {...state, cartItems: action.item}
     case UPDATE_ITEM_IN_CART:
       for (let i = 0; i < state.length; i++) {
         if (state.id === action.id) {
@@ -129,15 +135,7 @@ const cartReducer = (state = [], action) => {
       }
       return state
     case DELETE_ONE_DUCK:
-      for (let i = 0; i < state.length; i++) {
-        if (state[i].id === action.id) {
-          state[i].quantity = state[i].quantity - 1
-          break
-        }
-      }
-      return state
-    case CLEAR_CART:
-      return []
+      return {...state, cartItems: action.items}
     default:
       return state
   }
