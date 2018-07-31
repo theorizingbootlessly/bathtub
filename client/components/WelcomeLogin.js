@@ -7,4 +7,6 @@ const WelcomeLogin = props => {
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 })
+
+module.exports = WelcomeLogin
 export default connect(mapStateToProps)(WelcomeLogin)

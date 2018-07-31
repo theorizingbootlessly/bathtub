@@ -10,7 +10,8 @@ import LogIn from './logIn-form'
 
 describe('<LogIn />', () => {
   it('renders a form input for email address', () => {
-     const wrapper = shallow(<LogIn />)
-     expect(wrapper).to.be.class
+    //  expect(wrapper).to.be.class
+    let wrapper = shallow(<LogIn />)
+    expect(wrapper.find('login-form')).exist()
   })
 })
