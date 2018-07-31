@@ -8,43 +8,15 @@ const DELETE_ONE_DUCK = 'DELETE_ONE_DUCK'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 
-//Dummy data
-// const defaultCart = [
-//   {
-//     id: 7,
-//     name: 'Great Duck',
-//     description: 'Scientifically the greatest duck',
-//     price: 3.99,
-//     imgUrl:
-//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-//     quantity: 9
-//   },
-//   {
-//     id: 8,
-//     name: 'WonderDuck',
-//     description: 'Heroic duck at a heroic price',
-//     price: 4.99,
-//     imgUrl:
-//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-//     quantity: 8
-//   },
-//   {
-//     id: 9,
-//     name: 'Magic Duck',
-//     description: 'Magical duck at a magical price',
-//     price: 9.99,
-//     imgUrl:
-//       'https://images-na.ssl-images-amazon.com/images/I/610EksXe52L._AC_UL160_SR160,160_.jpg',
-//     quantity: 7
-//   }
-// ]
-
 //Action creators
 
-const getCart = cart => ({
+const getCart = cart => {
+  console.log(cart, 'cart')
+  return {
   type: GET_CART,
   cart
-})
+  }
+}
 
 // deletes section
 export const deleteItem = id => ({
@@ -65,12 +37,34 @@ const updateItem = (id, quantity) => ({
 })
 
 //Thunks
-
 export const renderCart = userId => async dispatch => {
   try {
     const response = await axios.post(`/api/cart/${userId}`)
     dispatch(getCart(response.data))
   } catch (err) {
+    console.log(err)
+  }
+}
+
+export const renderGuestCart = () => async dispatch => {
+  try{
+    const productIdAndQuant = await axios.get('/api/cart/guest')
+    let productIds = Object.keys(productIdAndQuant.data)
+    let product
+    let products = []
+
+    productIds.forEach((item) => {
+       product =  axios.get(`/api/product/${(item)}`)
+       products.push(product)
+      })
+
+    let productsArr = await Promise.all(products)
+    let final = productsArr.map((productstuff) => {
+      return productstuff.data
+    })
+
+    dispatch(getCart(final))
+  } catch(err) {
     console.log(err)
   }
 }
@@ -98,6 +92,7 @@ export const updateItemInCart = (id, quantity) => dispatch => {
     console.log(err)
   }
 }
+
 
 //Reducer
 const cartReducer = (state = [], action) => {
