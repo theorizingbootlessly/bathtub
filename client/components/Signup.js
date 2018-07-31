@@ -122,7 +122,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUsers: () => dispatch(users()),
-    addUser: (user) => dispatch(add_user(user),)
+    addUser: (user) => dispatch(add_user(user)),
   }
 }
 

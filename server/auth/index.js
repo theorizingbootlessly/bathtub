@@ -12,6 +12,7 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
+      req.session.loggedIn = true
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
@@ -34,12 +35,13 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
+  req.session.loggedIn = false
   req.session.destroy()
   res.redirect('/')
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+    res.json({user: req.user, loggedIn: req.session.loggedIn})
 })
 
 router.use('/google', require('./google'))

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Cart, Product, User} = require('../db/models')
+const {Cart} = require('../db/models')
 
 // route for rendering Cart items
 router.post('/:userId', async (req, res, next) => {
@@ -72,51 +72,72 @@ router.delete('/:userId/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/:userOrGuest/cart', async (req, res, next) => {
-  try {
-    const product = {
-      productId: req.body.id
+router.get('/guest', (req, res, next) => {
+  res.send(req.session.cart)
+})
+
+router.post('/', (req, res, next) => {
+  if (req.body.buyerId === 'sessionId') {
+    addToCartSession(req, res, next)
+  } else {
+    addToCartUser(req, res, next)
+  }
+})
+
+function addToCartSession(req, res, next) {
+  //Check Session Cart
+  const body = req.body
+  let cart
+  if (!body.productId) {
+    res.sendStatus(404)
+  } else if (req.session.cart) {
+    if (req.session.cart[body.productId] === undefined) {
+      req.session.cart[body.productId] = Number(body.quantity)
+    } else {
+      req.session.cart[body.productId] += Number(body.quantity)
     }
+  } else {
+    cart = req.session.cart
+      ? req.session.cart
+      : {[body.productId]: body.quantity}
+    req.session.cart = cart
+  }
+  res.status(201).send(cart)
+}
 
-    const cart = await Cart.findAll({
-      where: {
-        userId: req.params.userOrGuest
-      }
-    })
-
+async function addToCartUser(req, res, next) {
+  try {
+    //Variables
+    const body = req.body
+    const product = {
+      productId: body.productId
+    }
     const itemExists = await Cart.findOne({
       where: {
-        productId: req.body.id,
-        userId: req.params.userOrGuest
+        productId: body.productId,
+        userId: body.buyerId
       }
     })
 
-    if (!cart || !product) {
+    //Logic
+    if (!product) {
       res.sendStatus(404)
     } else if (itemExists) {
-      // if (user === 'guest') {
-      // if (!req.session.cart) {
-      //   req.session.cart = [product];
-      // } else {
-      //   req.session.cart.push(product);
-      //   res.status(201).send(product);
-      // }
-      // }
-      await itemExists.addToQuantity(req.body.quantity)
+      await itemExists.addToQuantity(body.quantity)
     } else {
       await Cart.create({
-        productId: req.body.id,
-        quantity: req.body.quantity,
-        userId: req.params.userOrGuest,
-        imgURL: req.body.imgURL,
-        name: req.body.name,
-        price: req.body.price
+        productId: body.productId,
+        quantity: body.quantity,
+        userId: body.buyerId,
+        imgURL: body.imgURL,
+        name: body.name,
+        price: body.price
       })
       res.status(201).send(product)
     }
   } catch (err) {
     next(err)
   }
-})
+}
 
 module.exports = router

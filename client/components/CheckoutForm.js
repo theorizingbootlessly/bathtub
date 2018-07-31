@@ -11,7 +11,7 @@ class CheckoutForm extends Component {
   }
 
   async handleSubmit(ev) {
-    let {token} = await this.props.stripe.createToken({name: 'Name'})
+    let {token} = await this.props.stripe.createToken(this.props.token)
     let response = await fetch('/users/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
@@ -28,9 +28,19 @@ class CheckoutForm extends Component {
   render() {
     const {checkComplete} = this.props
     if (checkComplete === 'success') {
-      return <h1>Purchase Complete</h1>
+      return (
+        <div>
+          {alert('Purchase complete!')}
+          {this.props.clearCheckComplete()}
+        </div>
+      )
     } else if (checkComplete === 'error') {
-      return <h1>Purchase failed due to insufficient information</h1>
+      return (
+        <div>
+          {alert('Purchase failed. Please make sure all fields are filled in correctly.')}
+          {this.props.clearCheckComplete()}
+        </div>
+      )
     }
     return (
       <div className="checkout">

@@ -9,10 +9,13 @@ const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 
 //Action creators
 
-const getCart = cart => ({
-  type: GET_CART,
-  cart
-})
+const getCart = cart => {
+  console.log(cart, 'cart')
+  return {
+    type: GET_CART,
+    cart
+  }
+}
 
 // deletes section
 export const deleteItem = item => ({
@@ -33,10 +36,36 @@ const updateItem = (id, quantity) => ({
 })
 
 //Thunks
+export const renderCart = userId => async dispatch => {
+  try {
+    const response = await axios.post(`/api/cart/${userId}`)
+    dispatch(getCart(response.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-export const renderCart = currentUser => async dispatch => {
-  const response = await axios.post(`/api/cart/${currentUser}`)
-  dispatch(getCart(response.data))
+export const renderGuestCart = () => async dispatch => {
+  try {
+    const productIdAndQuant = await axios.get('/api/cart/guest')
+    let productIds = Object.keys(productIdAndQuant.data)
+    let product
+    let products = []
+
+    productIds.forEach(item => {
+      product = axios.get(`/api/product/${item}`)
+      products.push(product)
+    })
+
+    let productsArr = await Promise.all(products)
+    let final = productsArr.map(productstuff => {
+      return productstuff.data
+    })
+
+    dispatch(getCart(final))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export const deleteItemFromCart = item => async dispatch => {
@@ -51,7 +80,6 @@ export const deleteItemFromCart = item => async dispatch => {
   } catch (err) {
     console.log(err)
   }
-  cons
 }
 
 export const deleteOneDuck = item => async dispatch => {

@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 import {renderCart} from '../store/cart'
+import {createToken} from '../store/token'
+import {createPurchase} from '../store/purchase'
+import {clearCheckComplete} from '../store/checkComplete'
 import {connect} from 'react-redux'
-import axios from 'axios'
 
 class Checkout extends Component {
   constructor(props) {
@@ -13,15 +15,28 @@ class Checkout extends Component {
       lastName: '',
       email: '',
       address: '',
-      cart: props.cart,
-      checkComplete: ''
+      total: '',
+      subtotal: '',
+      tax: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.loadCart()
+    this.props.loadCart(this.props.currentUser.id)
+    let subtotal = 0
+    this.props.cart.forEach(item => {
+      subtotal += item.price * item.quantity
+    })
+    subtotal = Number(subtotal).toFixed(2)
+    const total = (Number(subtotal * 0.08) + Number(subtotal)).toFixed(2)
+    this.setState({
+      total: total,
+      subtotal: subtotal,
+      tax: (subtotal * 0.08).toFixed(2)
+    })
+    this.props.makeToken(this.props.currentUser.id, total)
   }
 
   handleChange(event) {
@@ -30,39 +45,20 @@ class Checkout extends Component {
     })
   }
 
-  async handleSubmit() {
-    let cartInStringForm = ''
-    this.state.cart.forEach(item => {
-      cartInStringForm += `id: ${item.id}, quantity: ${item.quantity}. `
-    })
-    try {
-      await axios.post('/api/purchase', {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        address: this.state.address,
-        cart: cartInStringForm,
-        userId: this.props.currentUser.id || null
-      })
-      this.setState({
-        checkComplete: 'success'
-      })
-    } catch (error) {
-      console.log(error)
-      this.setState({
-        checkComplete: 'error'
-      })
+  handleSubmit() {
+    const newPurchase = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      address: this.state.address,
+      cart: 'holding for cartId',
+      userId: this.props.currentUser.id || null
     }
+    this.props.makePurchase(newPurchase)
   }
 
   render() {
-    let subtotal = 0
-    this.props.cart.forEach(item => {
-      subtotal += item.price * item.quantity
-    })
-    subtotal = subtotal || 0.0
-    const tax = subtotal * 0.08 || 0.0
-    const total = tax + subtotal || 0.0
+    console.log('this.props', this.props.user)
     return (
       <div>
         Your cart so far:<br />
@@ -77,11 +73,11 @@ class Checkout extends Component {
           })}
         </ul>
         <br />
-        Subtotal: ${subtotal}
+        Subtotal: ${this.state.subtotal}
         <br />
-        Tax (8%): ${tax}
+        Tax (8%): ${this.state.tax}
         <br />
-        <strong>Total: ${total}</strong>
+        <strong>Total: ${this.state.total}</strong>
         <form onSubmit={this.handleSubmit}>
           <label forhtml="firstName">First name: </label>
           <input
@@ -125,7 +121,10 @@ class Checkout extends Component {
           <Elements>
             <CheckoutForm
               handleSubmit={this.handleSubmit}
-              checkComplete={this.state.checkComplete}
+              checkComplete={this.props.checkComplete}
+              token={this.props.token}
+              total={this.state.total}
+              clearCheckComplete={this.props.clearCheckComplete}
             />
           </Elements>
         </StripeProvider>
@@ -135,16 +134,21 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('state', state)
   return {
     cart: state.cart.cartItems,
-    // user: state.user,
-    currentUser: state.user.currentUser
+    token: state.token,
+    currentUser: state.user.currentUser,
+    checkComplete: state.checkComplete
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCart: () => dispatch(renderCart())
+    loadCart: id => dispatch(renderCart(id)),
+    makeToken: (id, total) => dispatch(createToken(id, total)),
+    makePurchase: purchase => dispatch(createPurchase(purchase)),
+    clearCheckComplete: () => dispatch(clearCheckComplete())
   }
 }
 
