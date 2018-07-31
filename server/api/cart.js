@@ -19,10 +19,10 @@ router.get('/guest', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  if (req.body.buyerId === 'sessionId'){
-    addToCartSession(req,res,next)
+  if (req.body.buyerId === 'sessionId') {
+    addToCartSession(req, res, next)
   } else {
-    addToCartUser(req,res,next)
+    addToCartUser(req, res, next)
   }
 })
 
@@ -36,36 +36,29 @@ router.delete('/:userId', async (req, res, next) => {
   }
 })
 
- function addToCartSession(req, res, next){
-    //Check Session Cart
-    const body = req.body
-    let cart;
-    if (!body.productId) {
-      res.sendStatus(404)
-    } else if (req.session.cart) {
-        if (req.session.cart[body.productId] === undefined){
-          req.session.cart[body.productId] = Number(body.quantity)
-        } else {
-          req.session.cart[body.productId] += Number(body.quantity)
-        }
+function addToCartSession(req, res, next) {
+  //Check Session Cart
+  const body = req.body
+  let cart
+  if (!body.productId) {
+    res.sendStatus(404)
+  } else if (req.session.cart) {
+    if (req.session.cart[body.productId] === undefined) {
+      req.session.cart[body.productId] = Number(body.quantity)
     } else {
-<<<<<<< HEAD
-        let cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity}
-        req.session.cart = cart
-      }
-      res.sendStatus(201)
-
-=======
-       cart = req.session.cart ? req.session.cart : {[body.productId] : body.quantity}
-        req.session.cart = cart
-      }
-      res.status(201).send(cart)
-
->>>>>>> master
+      req.session.cart[body.productId] += Number(body.quantity)
+    }
+  } else {
+    cart = req.session.cart
+      ? req.session.cart
+      : {[body.productId]: body.quantity}
+    req.session.cart = cart
   }
+  res.status(201).send(cart)
+}
 
-async function addToCartUser (req, res, next){
-  try{
+async function addToCartUser(req, res, next) {
+  try {
     //Variables
     const body = req.body
     const product = {
@@ -94,7 +87,7 @@ async function addToCartUser (req, res, next){
       })
       res.status(201).send(product)
     }
-  } catch(err){
+  } catch (err) {
     next(err)
   }
 }
