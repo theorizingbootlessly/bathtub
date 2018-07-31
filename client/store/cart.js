@@ -113,7 +113,9 @@ export const deleteItemFromGuestCart = item => async dispatch => {
 export const updateGuestCart = item => async dispatch => {
   try {
     //Deletes item from session cart
-    const updatedCart = await axios.put(`/api/cart/guest/${item.item.id}`, {item} )
+    const updatedCart = await axios.put(`/api/cart/guest/${item.item.id}`, {
+      item
+    })
     let productIds = Object.keys(updatedCart.data)
     let product
     let products = []
@@ -128,8 +130,8 @@ export const updateGuestCart = item => async dispatch => {
       return productstuff.data
     })
 
-     //Matches up quantity correctly
-     final.forEach(duck => {
+    //Matches up quantity correctly
+    final.forEach(duck => {
       duck.quantity = updatedCart.data[duck.id]
     })
 
@@ -138,7 +140,6 @@ export const updateGuestCart = item => async dispatch => {
     console.log(err)
   }
 }
-
 
 export const deleteItemFromCart = item => async dispatch => {
   try {
@@ -176,25 +177,15 @@ export const deleteOneDuck = item => async dispatch => {
 export const deleteCart = userId => async dispatch => {
   try {
     if (userId === undefined) {
-      const deletedCart = await axios.delete('/api/cart/guest')
+      await axios.delete('/api/cart/guest')
     } else {
-      const deletedCart = await axios.delete(`/api/cart/${userId}`)
+      await axios.delete(`/api/cart/${userId}`)
     }
-    dispatch(clearCart(deletedCart))
+    dispatch(clearCart([]))
   } catch (err) {
     console.log(err)
   }
 }
-// export const deleteGuestCart = () => async dispatch => {
-//   try {
-//     console.log('made it to delete guest cart store TRY')
-//     const deletedCart = await axios.delete(`/api/cart/guest`)
-//     dispatch(clearCart(deletedCart))
-//   } catch (err) {
-//     console.log('made it to delete guest cart store CATCH ERR')
-//     console.log(err)
-//   }
-// }
 
 export const updateItemInCart = (id, quantity) => dispatch => {
   try {
