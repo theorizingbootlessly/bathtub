@@ -129,8 +129,7 @@ async function seed() {
     }),
     Product.create({
       name: 'donald trump duck',
-      description:
-        'This duck is your president, whether you quack it or not. Believe me.',
+      description: 'This duck is your president, whether you quack it or not.',
       color: 'yellow',
       price: 200,
       imgURL:
