@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {Login} from './auth-form'
 import {set_currentUser} from '../store'
 
-class LogIn extends Component {
+export class LogIn extends Component {
   constructor() {
     super()
     this.state = {

@@ -7,7 +7,7 @@ describe('Reducer', () => {
   it('returns the initial state by default', () => {
     const store = createStore(reducer)
     expect(store.getState().user).to.be.an('object');
-    expect(store.getState().cart).to.be.an('array');
+    expect(store.getState().cart).to.be.an('object');
     expect(store.getState().products.allDucks).to.be.an('array');
   });
 });

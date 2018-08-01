@@ -19,7 +19,7 @@ describe('Action-creators', () => {
       const id = 1;
       expect(deleteItem(id)).to.be.deep.equal({
         type: 'DELETE_ITEM_FROM_CART',
-        id: id
+        item: id
       });
     });
   });
@@ -29,35 +29,8 @@ describe('Action-creators', () => {
       const id = 2;
       expect(deleteOne(id)).to.be.deep.equal({
         type: 'DELETE_ONE_DUCK',
-        id: id
+        items: id
       });
     });
   })
 });
-
-// describe('Reducer', () => {
-
-//   it('returns the initial state by default', () => {
-//     const store = createStore(reducer);
-//     expect(store.getState().to.be.an('array'));
-//   });
-
-//   describe('reduces on DELETE_ITEM_FROM_CART action', () => {
-
-//     it ('loops through cart and deletes the correct item', () => {
-//       const store = createStore(reducer);
-//       const prevState = store.getState();
-//       const duck = getRandomCartItem(ducks);
-//       const action = { type: 'DELETE_ITEM_FROM_CART', id: duck.id};
-//       store.dispatch(action);
-
-//       const newState = store.getState();
-
-//       expect(store.getState().to.be.deep.equal(duck));
-
-//       expect(newState).to.not.be.equal(prevState);
-//     })
-
-//   })
-
-// })
