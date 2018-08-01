@@ -1,9 +1,14 @@
 body {
   font-family: sans-serif;
+  cursor: default;
 }
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  cursor: crosshair;
 }
 
 label {
@@ -24,9 +29,23 @@ h6 {
   font-size: 18px;
 }
 
+.description {
+  font-size: 14px;
+}
+
+.duck-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.empty-cart-duck {
+  height: 300px;
+  width: 300px;
+}
+
 .landing-page-background {
   background-color: skyblue;
-  color: grey;
+  color: midnightblue;
 }
 
 .login-form {
@@ -39,10 +58,6 @@ h6 {
   width: 80%; /* value of your choice which suits your alignment */
 }
 
-.checkout-link {
-  position: relative;
-}
-
 .landing-page-img {
   display: block;
   height: 200px;
@@ -51,11 +66,23 @@ h6 {
   width: 200px;
 }
 
+.takes-away-bullet-points {
+  list-style-type: none;
+}
+
 /* NavBar */
 #welcome {
   position: absolute;
   right: 10px;
   font-size: 18px;
+}
+
+.welcome-to-bathtub {
+  font-family: Verdana, sans-serif;
+}
+
+.welcome-to-bathtub-blurb {
+  font-family: Verdana, sans-serif;
 }
 
 /* SingleDuck */

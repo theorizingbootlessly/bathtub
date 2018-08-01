@@ -74,13 +74,19 @@ class Cart extends Component {
   render() {
     const cartHasItems =
       this.props.cart === undefined || this.props.cart.length === 0 ? (
-        <div>There are no items in your cart!</div>
+        <div>
+          <img
+            src="https://rlv.zcache.com/funny_duck_in_a_bathtub_cartoon_postcards-rfbd3e44cb15d4cf0980e1acdf7df0528_vgbaq_8byvr_512.jpg"
+            className="empty-cart-duck"
+          />
+          <br />
+          There are no items in your cart!
+        </div>
       ) : (
         <div className="itemSize">
           {this.props.cart.map(item => (
-            <li key={item.id}>
-              <br />
-              {item.name}
+            <li key={item.id} className="takes-away-bullet-points">
+              <span className="duck-name">{item.name}</span>
               <br />
               <img className="picture" src={item.imgURL} />
               <br />
