@@ -27,9 +27,9 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'red duck',
-      description: 'red duck',
-      color:
+      description:
         'Embarrassed? Angry? Related to Clifford? The choice is yours with red duck.',
+      color: 'red',
       price: 10,
       imgURL:
         'https://images.blogthings.com/whatcolorrubberduckieareyouquiz/red.jpg',
