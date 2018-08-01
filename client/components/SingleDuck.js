@@ -51,11 +51,11 @@ class SingleDuck extends Component {
     const {duck} = this.props
     return (
       <div>
-        {duck.name}
+        <div className="duck-name">{duck.name}</div>
         <div>
           <img className="picture" src={duck.imgURL} />
         </div>
-        <div>description: {duck.description}</div>
+        <div className="description">description: {duck.description}</div>
         <div>${duck.price}</div>
         {this.state.addedToCart ? <SuccessMessage /> : <div />}
         <form>

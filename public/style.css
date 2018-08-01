@@ -1,9 +1,14 @@
 body {
   font-family: sans-serif;
+  cursor: default;
 }
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  cursor: crosshair;
 }
 
 label {
@@ -24,19 +29,32 @@ h6 {
   font-size: 18px;
 }
 
-.landing-page-background {
-  background-color: skyblue;
-  color: grey;
+.description {
+  font-size: 14px;
 }
 
-.login-form {
-  background: #bbb0b0;
-  padding: 10vw 10vw;
-  margin: 10vw 10vw;
+.duck-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.empty-cart-duck {
+  height: 300px;
+  width: 300px;
+}
+
+.landing-page-background {
+  background-color: skyblue;
+  color: midnightblue;
 }
 .center_div {
   margin: 0 auto;
-  width: 80%; /* value of your choice which suits your alignment */
+}
+
+.login-form {
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .landing-page-img {
@@ -47,22 +65,33 @@ h6 {
   width: 200px;
 }
 
+.takes-away-bullet-points {
+  list-style-type: none;
+}
 
 /* NavBar */
-#welcome{
+#welcome {
   position: absolute;
   right: 10px;
   font-size: 18px;
 }
 
+.welcome-to-bathtub {
+  font-family: Verdana, sans-serif;
+}
+
+.welcome-to-bathtub-blurb {
+  font-family: Verdana, sans-serif;
+}
+
 /* SingleDuck */
-.picture{
+.picture {
   height: 80px;
   width: 80px;
 }
 
 /* On Duck List and Cart*/
-.itemSize{
+.itemSize {
   height: 300px;
   width: 400px;
 }
