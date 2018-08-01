@@ -89,40 +89,45 @@ class Signup extends Component {
 
   render() {
     return (
-      <div>
-        <form>
-          <label>
-            Email:
-            <br />
-            <input
-              type="text"
-              name="email"
-              onChange={this.handleChange}
-              value={this.state.email}
-            />
-          </label>
-          <label>
-            Password:
-            <br />
-            <input
-              type="password"
-              name="password"
-              onChange={this.handleChange}
-              value={this.state.password}
-            />
-          </label>
-          <label>
-            Validate Password:
-            <br />
-            <input
-              type="password"
-              name="validatePassword"
-              onChange={this.handleChange}
-              value={this.state.validatePassword}
-            />
-          </label>
-        </form>
-        <button onClick={this.handleSubmit}>Submit</button>
+      <div class="container center_div">
+        <h1 class="form-heading">Sign up Page</h1>
+        <div class="login-form">
+          <form>
+            <label>
+              Email:
+              <br />
+              <input
+                type="text"
+                name="email"
+                onChange={this.handleChange}
+                value={this.state.email}
+              />
+            </label>
+            <label>
+              Password:
+              <br />
+              <input
+                type="password"
+                name="password"
+                onChange={this.handleChange}
+                value={this.state.password}
+              />
+            </label>
+            <label>
+              Validate Password:
+              <br />
+              <input
+                type="password"
+                name="validatePassword"
+                onChange={this.handleChange}
+                value={this.state.validatePassword}
+              />
+            </label>
+          </form>
+          <button onClick={this.handleSubmit} class="btn btn-primary">
+            Submit
+          </button>
+        </div>
       </div>
     )
   }

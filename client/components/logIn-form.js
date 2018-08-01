@@ -55,8 +55,10 @@ export class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
-      <div className="container center_div">
-        <div className="login-form">
+
+      <div class="container center_div">
+        <h1 class="form-heading">User Login</h1>
+        <div class="login-form">
           <form onSubmit={this.handleSubmit}>
             <label>Email</label>
             <input
@@ -73,7 +75,9 @@ export class LogIn extends Component {
               value={this.state.password}
             />
             <br />
-            <button type="submit">Sign In</button>
+            <button type="submit" class="btn btn-primary">
+              Sign In
+            </button>
           </form>
           <a href="/auth/google">login with Google</a>
         </div>
