@@ -28,7 +28,8 @@ async function seed() {
     Product.create({
       name: 'red duck',
       description: 'red duck',
-      color: 'red',
+      color:
+        'Embarrassed? Angry? Related to Clifford? The choice is yours with red duck.',
       price: 10,
       imgURL:
         'https://images.blogthings.com/whatcolorrubberduckieareyouquiz/red.jpg',
@@ -36,8 +37,7 @@ async function seed() {
     }),
     Product.create({
       name: 'yellow duck',
-      description:
-        'Once, there was a yellow duck. He was smart. But, he died. The end',
+      description: `Banana duck didn't have the same ring to it.`,
       color: 'yellow',
       price: 200,
       imgURL:
@@ -46,7 +46,7 @@ async function seed() {
     }),
     Product.create({
       name: 'green ninja duck',
-      description: 'Swims than other Ninja animals such as turtles.',
+      description: 'Swims faster than other Ninja animals such as turtles.',
       color: 'green',
       price: 500,
       imgURL:
@@ -56,7 +56,7 @@ async function seed() {
     Product.create({
       name: 'pink duck',
       description:
-        'Fondly rambles about his ancestors, the great red and white ducks.',
+        'Fondly rambles about his ancestors, the great Red and White ducks.',
       color: 'yellow',
       price: 200,
       imgURL:
@@ -129,7 +129,7 @@ async function seed() {
     }),
     Product.create({
       name: 'donald trump duck',
-      description: 'This duck is your president, whether you quack it or not.',
+      description: `Fans of this duck like to say 'This duck is your president, whether you quack it or not!'`,
       color: 'yellow',
       price: 200,
       imgURL:
