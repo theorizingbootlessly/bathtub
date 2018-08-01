@@ -74,11 +74,12 @@ class Cart extends Component {
   render() {
     const cartHasItems =
       this.props.cart === undefined || this.props.cart.length === 0 ? (
-        'There are no items in your cart!'
+        <div>There are no items in your cart!</div>
       ) : (
         <div className="itemSize">
           {this.props.cart.map(item => (
             <li key={item.id}>
+              <br />
               {item.name}
               <br />
               <img className="picture" src={item.imgURL} />
@@ -119,11 +120,13 @@ class Cart extends Component {
       )
     return (
       <div>
+        <div className="checkout-link">
+          <Link to="/checkout">
+            <strong>Checkout</strong>
+            <br />
+          </Link>
+        </div>
         {cartHasItems}
-        <br />
-        <Link to="/checkout">
-          <strong>Checkout</strong>
-        </Link>
       </div>
     )
   }

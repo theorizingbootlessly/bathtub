@@ -39,6 +39,10 @@ h6 {
   width: 80%; /* value of your choice which suits your alignment */
 }
 
+.checkout-link {
+  position: relative;
+}
+
 .landing-page-img {
   display: block;
   height: 200px;
@@ -47,22 +51,21 @@ h6 {
   width: 200px;
 }
 
-
 /* NavBar */
-#welcome{
+#welcome {
   position: absolute;
   right: 10px;
   font-size: 18px;
 }
 
 /* SingleDuck */
-.picture{
+.picture {
   height: 80px;
   width: 80px;
 }
 
 /* On Duck List and Cart*/
-.itemSize{
+.itemSize {
   height: 300px;
   width: 400px;
 }
