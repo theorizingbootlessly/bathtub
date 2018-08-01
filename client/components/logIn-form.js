@@ -55,6 +55,7 @@ export class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
+
       <div class="container center_div">
         <h1 class="form-heading">User Login</h1>
         <div class="login-form">

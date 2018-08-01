@@ -28,7 +28,7 @@ class SingleDuck extends Component {
       const buyerId = this.props.currentUser.email
         ? this.props.currentUser.id
         : 'sessionId'
-      const addItem = await axios.post('/api/cart', {
+      await axios.post('/api/cart', {
         buyerId: buyerId,
         productId: this.props.duck.id,
         quantity: this.state.quantity,
