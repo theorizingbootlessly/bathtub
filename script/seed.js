@@ -46,7 +46,7 @@ async function seed() {
     }),
     Product.create({
       name: 'green ninja duck',
-      description: 'In Japan, Ninja fought Samurais and yakuza!',
+      description: 'Swims than other Ninja animals such as turtles.',
       color: 'green',
       price: 500,
       imgURL:
@@ -55,7 +55,8 @@ async function seed() {
     }),
     Product.create({
       name: 'pink duck',
-      description: 'once there was a pink duck. The end',
+      description:
+        'Fondly rambles about his ancestors, the great red and white ducks.',
       color: 'yellow',
       price: 200,
       imgURL:
@@ -64,7 +65,7 @@ async function seed() {
     }),
     Product.create({
       name: 'real duck',
-      description: '1',
+      description: `This duck is the realest duck. Please note it breathes and may need feeding.`,
       color: 'real',
       price: 1,
       imgURL:
@@ -73,7 +74,7 @@ async function seed() {
     }),
     Product.create({
       name: 'white duck',
-      description: '1',
+      description: `Also known as 'camouflage duck' in certain bathtubs.`,
       color: 'white',
       price: 9,
       imgURL: 'https://www.purelypoultry.com/images/pekin-ducklings_01.jpg',
@@ -81,7 +82,7 @@ async function seed() {
     }),
     Product.create({
       name: 'black duck',
-      description: '1',
+      description: `Black duck kindly requests "do not call me daffy duck"`,
       color: 'black',
       price: 15,
       imgURL:
@@ -90,7 +91,7 @@ async function seed() {
     }),
     Product.create({
       name: 'batman duck',
-      description: '1',
+      description: `Batman duck has a secret identity, but it's not a secret that he's a duck.`,
       color: 'batman',
       price: 10,
       imgURL:
@@ -100,7 +101,7 @@ async function seed() {
 
     Product.create({
       name: 'blue duck',
-      description: 'blue duck',
+      description: `Blue duck is not sad, just the coolest color this side of the bathtub.`,
       color: 'blue',
       price: 10,
       imgURL:
@@ -109,8 +110,7 @@ async function seed() {
     }),
     Product.create({
       name: 'rosie duck',
-      description:
-        'Once, there was a yellow duck. He was smart. But, he died. The end',
+      description: `Rosie duck sells out fast. Who can't with a name and look like that? Not to be confused with Rosie O'Donnell duck.`,
       color: 'temptation',
       price: 5000,
       imgURL:
@@ -119,7 +119,8 @@ async function seed() {
     }),
     Product.create({
       name: 'computer geek duck',
-      description: 'In Japan, Ninja fought Samurais and yakuza!',
+      description:
+        'Did you know?: This duck actually helped create this website.',
       color: 'green',
       price: 500,
       imgURL:
@@ -128,7 +129,8 @@ async function seed() {
     }),
     Product.create({
       name: 'donald trump duck',
-      description: 'once there was a pink duck. The end',
+      description:
+        'This duck is your president, whether you quack it or not. Believe me.',
       color: 'yellow',
       price: 200,
       imgURL:
@@ -137,7 +139,7 @@ async function seed() {
     }),
     Product.create({
       name: 'donald duck',
-      description: '1',
+      description: 'Does not yet come with the voice when you squeeze it.',
       color: 'real',
       price: 55,
       imgURL: 'https://lumiere-a.akamaihd.net/v1/images/image_d1ddaa67.jpeg',
@@ -145,7 +147,8 @@ async function seed() {
     }),
     Product.create({
       name: 'buff duck',
-      description: '1',
+      description:
+        'Asks for many portions of protein powder. Be wary of eating carbs in the bathtub with this duck.',
       color: 'buff',
       price: 0.01,
       imgURL:
@@ -154,7 +157,7 @@ async function seed() {
     }),
     Product.create({
       name: 'superman duck',
-      description: '1',
+      description: `Everyone knows its real name is Clark Quack, we just don't quack about it.`,
       color: 'black',
       price: 0.01,
       imgURL:
@@ -163,7 +166,7 @@ async function seed() {
     }),
     Product.create({
       name: 'terminator duck',
-      description: '1',
+      description: `Previously known as the Calfiornia Quackinator.`,
       color: 'elvis',
       price: 0.01,
       imgURL:
