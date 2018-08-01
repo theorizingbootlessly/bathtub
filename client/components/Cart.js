@@ -109,16 +109,9 @@ class Cart extends Component {
                 />
                 <button>Submit Change</button>
               </form>
-              <br />
-              <Link to="/cart" onClick={() => this.handleDelete(event, item)}>
-                [Remove these kinds of ducks]
-              </Link>
-              <br />
-              <Link
-                to="/cart"
-                onClick={() => this.handleDeleteOne(event, item)}
-              >
-                [Remove ONE of this kind of duck]
+             
+              <Link className="btn btn-danger" id="removeBtn" to="/cart" onClick={() => this.handleDelete(event, item)}>
+                Delete Item
               </Link>
             </li>
           ))}

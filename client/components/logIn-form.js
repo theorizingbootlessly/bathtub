@@ -55,7 +55,7 @@ export class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
-      <div class="container center_div">
+      <div className="container center_div">
         <div className="login-form">
           <form onSubmit={this.handleSubmit}>
             <label>Email</label>
