@@ -27,7 +27,7 @@ class Navbar extends Component {
   render() {
     const userIsLoggedIn = this.props.currentUser.email
     return (
-      <nav>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light" id="navBar">
         <Link to="/home">Home</Link>
         {userIsLoggedIn ? (
           <Link to="/home" onClick={this.handleLogout}>
@@ -39,7 +39,7 @@ class Navbar extends Component {
         <Link to="/cart">Cart</Link>
         <Link to="/products">Products</Link>
         {userIsLoggedIn ? (
-          <h3>Welcome, {this.props.currentUser.email}</h3>
+          <h3 id="welcome">Welcome, {this.props.currentUser.email}</h3>
         ) : (
           <Link to="/signup">Sign-up</Link>
         )}

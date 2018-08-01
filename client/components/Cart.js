@@ -76,12 +76,12 @@ class Cart extends Component {
       this.props.cart === undefined || this.props.cart.length === 0 ? (
         'There are no items in your cart!'
       ) : (
-        <div>
+        <div className="itemSize">
           {this.props.cart.map(item => (
             <li key={item.id}>
               {item.name}
               <br />
-              <img src={item.imgURL} />
+              <img className="picture" src={item.imgURL} />
               <br />
               {item.color}
               <br />

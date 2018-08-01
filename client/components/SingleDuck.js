@@ -53,7 +53,7 @@ class SingleDuck extends Component {
       <div>
         {duck.name}
         <div>
-          <img src={duck.imgURL} />
+          <img className="picture" src={duck.imgURL} />
         </div>
         <div>description: {duck.description}</div>
         <div>${duck.price}</div>
