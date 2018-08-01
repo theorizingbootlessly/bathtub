@@ -61,6 +61,114 @@ async function seed() {
       imgURL:
         'https://images-na.ssl-images-amazon.com/images/I/510tuyL1dAL._SL1000_.jpg',
       quantity: 20
+    }),
+    Product.create({
+      name: 'real duck',
+      description: '1',
+      color: 'real',
+      price: 1,
+      imgURL:
+        'https://cdn.shopify.com/s/files/1/1365/2497/products/12547-DuckMask-Ducks_1600x.jpg?v=1520535208',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'white duck',
+      description: '1',
+      color: 'white',
+      price: 9,
+      imgURL: 'https://www.purelypoultry.com/images/pekin-ducklings_01.jpg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'black duck',
+      description: '1',
+      color: 'black',
+      price: 15,
+      imgURL:
+        'https://www.cacklehatchery.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/0/20171202_002257.jpg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'batman duck',
+      description: '1',
+      color: 'batman',
+      price: 10,
+      imgURL:
+        'https://3b3832722e63ef13df5f-655e11a96f14b2c941c4bc34ef58f583.ssl.cf2.rackcdn.com/product_images_new/TS_DC_Comics_Batman_Bath_Duck_4_99_Lifestyle-617-662.jpg',
+      quantity: 20
+    }),
+
+    Product.create({
+      name: 'blue duck',
+      description: 'blue duck',
+      color: 'blue',
+      price: 10,
+      imgURL:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK_BfHJ0MB8bvQDJcWXcwe5ExyZrCnxbQIbI_4dcTBBk_EXLBE',
+      quantity: 5
+    }),
+    Product.create({
+      name: 'rosie duck',
+      description:
+        'Once, there was a yellow duck. He was smart. But, he died. The end',
+      color: 'temptation',
+      price: 5000,
+      imgURL:
+        'https://www.amsterdamduckstore.com/wp-content/uploads/2017/03/Rosie-the-Riveter-Rubber-Duck-Amsterdam-Duck-Store.jpg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'computer geek duck',
+      description: 'In Japan, Ninja fought Samurais and yakuza!',
+      color: 'green',
+      price: 500,
+      imgURL:
+        'https://cdn7.bigcommerce.com/s-nf2x4/images/stencil/1280x1280/products/246/3856/geek__37110.1516998201.png?c=2&imbypass=on',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'donald trump duck',
+      description: 'once there was a pink duck. The end',
+      color: 'yellow',
+      price: 200,
+      imgURL:
+        'https://www.amsterdamduckstore.com/wp-content/uploads/2017/07/Trump-rubber-duck-Amsterdam-Duck-Store.jpg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'donald duck',
+      description: '1',
+      color: 'real',
+      price: 55,
+      imgURL: 'https://lumiere-a.akamaihd.net/v1/images/image_d1ddaa67.jpeg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'buff duck',
+      description: '1',
+      color: 'buff',
+      price: 0.01,
+      imgURL:
+        'https://cdn7.bigcommerce.com/s-nf2x4/images/stencil/1280x1280/products/307/4245/muscle__52045.1520090269.png?c=2&imbypass=on',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'superman duck',
+      description: '1',
+      color: 'black',
+      price: 0.01,
+      imgURL:
+        'https://www.virginmegastore.ae/medias/sys_master/root/hdb/h41/9103072886814/338703-main.jpg',
+      quantity: 20
+    }),
+    Product.create({
+      name: 'terminator duck',
+      description: '1',
+      color: 'elvis',
+      price: 0.01,
+      imgURL:
+        'http://static1.squarespace.com/static/59698a7d29687fd47a2a7c52/5a4a93c2c83025f844a75e02/59951989501a10c1ef0d7b0e/1514841970529/?format=1000w',
+      quantity: 20
     })
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator

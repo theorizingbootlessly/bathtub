@@ -55,10 +55,9 @@ export class LogIn extends Component {
       return <Redirect to="/welcome" />
     }
     return (
-
-      <div class="container center_div">
-        <h1 class="form-heading">User Login</h1>
-        <div class="login-form">
+      <div className="container center_div">
+        <h1 className="form-heading">User Login</h1>
+        <div className="login-form">
           <form onSubmit={this.handleSubmit}>
             <label>Email</label>
             <input
