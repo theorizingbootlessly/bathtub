@@ -12,8 +12,10 @@ describe('Product routes', () => {
 
   describe('/api/product', () => {
 
-    beforeEach(() => {
-      return Product.create({
+    let product
+
+    beforeEach(async () => {
+      product = await Product.create({
         name: 'Bill Nye the science duck',
         description: 'Bill Bill Bill Bill!',
         color: 'yellow',
@@ -41,6 +43,14 @@ describe('Product routes', () => {
       const res = await request(app)
         .get('/api/product')
 
+        expect(res.body[0].id).to.be.a('number')
+    })
+
+    it ('price cannot be null', async ()=> {
+      product.price = null
+
+      const res = await request(app)
+        .get('/api/product')
         expect(res.body[0].id).to.be.a('number')
     })
   })
