@@ -10,7 +10,7 @@ class DuckList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="itemSize">
         {this.props.allDucks.map(duck => (
           <SingleDuck key={duck.id} duck={duck} />
         ))}

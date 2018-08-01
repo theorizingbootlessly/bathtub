@@ -54,3 +54,15 @@ h6 {
   right: 10px;
   font-size: 18px;
 }
+
+/* SingleDuck */
+.picture{
+  height: 80px;
+  width: 80px;
+}
+
+/* On Duck List */
+.itemSize{
+  height: 300px;
+  width: 400px;
+}
